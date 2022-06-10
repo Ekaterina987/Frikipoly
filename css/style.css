@@ -1,0 +1,868 @@
+*{
+    --lado_celda: calc(var(--lado_tablero) / 12);
+    --lado_celda_largo: calc(var(--lado_celda) * 1.5);
+    --lado_tablero: 900px;
+    --fuente_tablero: 0.555em;
+    --ficha_size: 1.8rem;
+    --barra_corto: calc(var(--lado_celda) / 5);
+    --contenedor_fichas: calc(var(--lado_celda) / 1.1);
+}
+@font-face {
+    font-family: "Animales Fantastic";
+    src: url("fonts/AnimalesFantastic-lGly.ttf");
+}
+@font-face {
+    font-family: "Harry P";
+    src: url("fonts/HARRYP__.TTF");
+}
+body{
+    margin: 0;
+    font-family: 'Libre Baskerville', serif;
+    background-color: rgb(75, 6, 18);
+}
+h3{
+    font-size: 1.5em;
+    font-family: "Animales Fantastic", serif;
+}
+p{
+    margin: 0;
+}
+.cont-dados{
+    text-align: center;
+}
+.boton{
+    border: none;
+    background-color: #22236a;
+    color: #f6d6b6;
+    font-family: "Libre Baskerville", serif;
+    border-radius: 0.8em;
+    padding: 0.5em 2em;
+    font-size: 1em;
+    transition: background-color 0.4s, color 0.4s;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: fit-content;
+}
+.btn-finalizar{
+    background-color: #a01a24;
+    font-size: 1.125em;
+    width: fit-content;
+}
+.btn-aceptar{
+    width: 50%;
+}
+.btn-cancelar{
+    width: 50%;
+    background-color: #a01a24;
+}
+
+.boton:hover:not([disabled]){
+    cursor: pointer;
+    background-color: #ffae0e;
+    color: #1a1710;
+}
+.boton:disabled{
+    cursor: auto;
+    background-color: #898997;
+}
+.btn-finalizar:hover:not([disabled]){
+    background-color: #1c6835;
+    color: #f6d6b6;
+}
+.btn-finalizar:disabled{
+    cursor: auto;
+    background-color: #907577;
+}
+#btn-cancelar:hover{
+    background-color: #3e0004;
+    color: #f6d6b6;
+}
+.cont-col{
+    width: 33.33333%;
+}
+.cont-botones{
+    display: flex;
+    align-items: center;
+}
+.cont-tirada{
+    position: absolute;
+    width: fit-content;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 1em;
+}
+.cont-mensaje{
+    text-align: center;
+}
+.mensaje{
+    opacity: 1;
+    transition: opacity 1s;
+}
+.transparente{
+    opacity: 0;
+}
+.tirada-dados{
+    padding-bottom: 4em;
+    padding-top: 0.5em;
+    width: 24em;
+    background-size: contain;
+    background: url("images/ribbonbanner.svg") no-repeat 50% 0;
+}
+
+.absoluto{
+    position: absolute;
+    width: fit-content;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+#titulo-juego{
+    text-align: center;
+    font-family: "Harry P", serif;
+    font-size: 3.653em;
+    width: fit-content;
+    margin: 0;
+}
+.contenedor-botones{
+    text-align: center;
+}
+.cont-interior{
+    padding: 1em;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+#mensaje{
+    max-width: 20em;
+    margin-right: auto;
+    margin-left: auto;
+}
+.svg-dados{
+    width: 6em;
+}
+.svg-dados path{
+    fill: #1a1710;
+    transition: fill 0.4s;
+}
+.dados:hover:not([disabled]){
+    cursor: pointer;
+}
+.dados:hover path{
+    fill: #a01a24;
+    transition: fill 0.4s;
+}
+.dados:disabled path{
+    fill: #a1997f;
+    cursor: auto;
+}
+.dados{
+    background-color: transparent;
+    border: none;
+}
+.cont-dados{
+    position: absolute;
+    width: calc(var(--lado_celda) * 9 );
+    left: 0;
+    right: 0;
+    margin: 1em auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+.infoDiv{
+    z-index: 9;
+    background-color: #f6d6b6;
+    text-align: center;
+    font-size: 0.702em;
+    width: 20em;
+    height: 30em;
+    margin-left: 10px;
+    padding: 0.5em;
+}
+.deuda{
+    width: 100%;
+    height: 10em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.79em;
+    padding-bottom: 1.7em;
+    color: #a01a24;
+    font-weight: bold;
+    background: url("images/banner.png") no-repeat center;
+    background-size: contain;
+}
+.infoDivCont{
+    border: 1px solid #1a1710;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.infoDivCont>div:first-child{
+    width: 100%;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    max-width: 100%;
+}
+.precio-info-tarjeta{
+    margin-top: auto;
+}
+h4{
+    margin: 0;
+    font-size: 1.266em;
+}
+.divisor{
+    height: 1px;
+    width: 80%;
+    margin: 0.5em auto;
+    background-color: #1a1710;
+}
+#tnombre1{
+    color: #9CCDEE;
+}
+#tnombre2{
+    color: #ECA400;
+}
+#tnombre3{
+    color: #1c873d;
+}
+#tnombre4{
+    color: #B20917;
+}
+#contenedor{
+    height: 100%;
+    min-height: 100vh;
+
+}
+#contenedor-tablero{
+    z-index: 9;
+    position: relative;
+    display: flex;
+    height: 100%;
+    min-height: 100vh;
+    padding: 2em 2em 0 2em;
+}
+.gradiente1{
+    z-index: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(56,54,43, 0);
+    background: radial-gradient(circle at top, rgb(134, 41, 33) 0%, rgba(42,34,8,0) 60%);
+}
+.gradiente{
+    z-index: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(56,54,43, 0);
+    background: radial-gradient(circle at left bottom, rgb(134, 41, 33) 0%, rgba(42,34,8,0) 40%);
+}
+#contTablero{
+    display: flex;
+    padding-left: 2em;
+    padding-right: 2em;
+
+}
+#tablero{
+    height: var(--lado_tablero);
+    width: var(--lado_tablero);
+    margin-left: auto;
+    margin-right: auto;
+    align-self: center;
+    border: 2px solid #1a1710;
+    background-image: url("images/tablero1.png");
+    background-size: cover;
+    background-position: center;
+}
+.celdaTablero{
+    box-sizing: border-box;
+    border: 1px solid #1a1710;
+    font-size: var(--fuente_tablero);
+    display: flex;
+}
+
+.celdaTableroAlto {
+    height: var(--lado_celda_largo);
+    width: var(--lado_celda);
+    flex-direction: column;
+}
+.celdaTableroAncho {
+    height: var(--lado_celda);
+    width: var(--lado_celda_largo);
+}
+.celdaTableroEsquina{
+    height: var(--lado_celda_largo);
+    width: var(--lado_celda_largo);
+    display: inline-block;
+
+}
+.celdaTableroEsquina{
+    font-size: 0.889em;
+    font-weight: bold;
+}
+
+.row {
+    display: flex;
+}
+.div-interior{
+    padding: 0.4em;
+    /*height: calc(100% - 30px);*/
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.internas{
+
+    width: calc(var(--lado_celda) * 9);
+    border-left: 2px solid #1a1710;
+    border-right: 2px solid #1a1710;
+}
+.internas-arriba{
+    border-top: 2px solid #1a1710;
+}
+.internas-abajo{
+    border-bottom: 2px solid #1a1710;
+}
+.col-1{
+    flex-grow: 1;
+    height: 100%;
+}
+.col-3{
+    width: 100%;
+}
+.row{
+    height: 100%;
+}
+
+.jugador{
+    height: 50%;
+}
+.jugadores{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+.ficha{
+    height: var(--ficha_size);
+    width: var(--ficha_size);
+    border-radius: var(--ficha_size);
+    box-shadow: 5px 5px 0 #1a1710;
+}
+.rowFichas{
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0.5em;
+    padding-right: 1.5em;
+    margin-top: -1.5em;
+}
+
+.ficha1{
+    background-color: #2772bb;
+}
+.ficha2{
+    background-color: #ffae0e;
+}
+.ficha3{
+    background-color: #1c6835;
+}
+.ficha4{
+    background-color: #a01a24;
+}
+
+.casillaJugador1{
+    border: 3px solid #2772bb;
+}
+.casillaJugador2{
+    border: 3px solid #ffae0e;
+}
+.casillaJugador3{
+    border: 3px solid #1c6835;
+}
+.casillaJugador4{
+    border: 3px solid #a01a24;
+}
+.galeones{
+    color: #f6d6b6;
+}
+.divColor{
+    height: var(--barra_corto);
+    width: 100%;
+    display: flex;
+}
+.divColorHorizontal{
+    height: 100%;
+    width: var(--barra_corto);
+}
+.divColorHorizontalIzq{
+    margin-left: auto;
+}
+.nombre{
+}
+.nombre-horizontal{
+    margin-right: 5px;
+    max-width: 6.5em;
+}
+.precio{
+    font-weight: bold;
+    text-align: center;
+}
+.contenedorHorizontal{
+    flex-grow: 1;
+    display: flex;
+    padding: 0.5em;
+    justify-content: space-between;
+}
+.contenedorHorizontalDerecha{
+    margin-right: auto;
+}
+.marron{
+    background-color: #700D1F;
+    color: #f6d6b6;
+}
+.azul-cielo{
+    background-color: #9CCDEE;
+    color: #1a1710;
+}
+.fucsia{
+    background-color: #DDA6C9;
+    color: #1a1710;
+}
+.naranja{
+    background-color: #ea541a;
+    color: #1a1710;
+}
+.rojo{
+    background-color: #B20917;
+    color: #f6d6b6;
+}
+.amarillo{
+    background-color: #ECA400;
+    color: #1a1710;
+}
+.verde{
+    background-color: #10471D;
+    color: #f6d6b6;
+}
+.azul-oceano{
+    background-color: #013BA7;
+    color: #f6d6b6;
+}
+.casita g{
+    fill: #3eac56;
+}
+.hotel g{
+    fill: #ff3946;
+}
+.svg-casa{
+    width: 15px;
+    height: 15px;
+}
+.pinchable:hover{
+    cursor: pointer;
+}
+
+.infoDiv{
+    position: absolute;
+}
+.fondo{
+    z-index: 99;
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: flex;
+    align-items: center;
+}
+.div-mensaje{
+    background-color: #efdbcb;
+    width: 300px;
+    height: 200px;
+    padding: 2em;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2em;
+    text-align: center;
+}
+.mensaje-popup{
+
+}
+.botones-popup{
+    display: flex;
+    gap: 1em;
+}
+.popup-ganar {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+    background-color: rgba(0,0,0,0.4);
+}
+.div-ganar{
+    background-color: #f6d6b6;
+    width: 36em;
+    height: 24em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 6em;
+    text-align: center;
+}
+.mensaje-ganar{
+    font-size: 2.887em;
+}
+.puntuaciones{
+    font-size: 1.802em;
+    color: #a01a24;
+}
+.div-puntuacion{
+    display: flex;
+    justify-content: space-between;
+}
+.cabecera-puntuaciones{
+    display: flex;
+    justify-content: space-between;
+}
+.hcabecera{
+    font-size: 1.266em;
+    font-weight: bold;
+}
+.btn-volver{
+    width: fit-content;
+    padding: 0.5em 2em;
+    margin-top: 2em;
+}
+
+.numero{
+    display: none;
+}
+
+
+.honeydukes{
+
+    background: url("images/honeydukes.png") no-repeat center;
+    background-size: 80%;
+}
+.sortilegios{
+
+    background: url("images/sortilegios.png") no-repeat 50% 80%;
+    background-size: 70%;
+}
+.ficha1 path{
+    fill: #ffc596;
+}
+.ficha2 path{
+    fill: #1a1710;
+}
+.ficha3 path{
+    fill: #f1e7de;
+}
+.ficha4 path{
+    fill: #eecf53;
+}
+.subrayado{
+    display: inline-block;
+    position: relative;
+    width: fit-content;
+}
+
+.subrayado:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    top: 1.5em;
+    transform-origin: bottom right;
+    transition: transform 0.5s ease-out;
+}
+
+#contenedor{
+    height: 100%;
+    min-height: 100vh;
+
+}
+#tnombre1:after{
+    background-color: #9CCDEE;
+}
+#tnombre2:after{
+    background-color: #ECA400;
+}
+#tnombre3:after{
+    background-color: #1c873d;
+}
+#tnombre4:after{
+    background-color: #B20917;
+}
+.subrayado-after:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.azkaban{
+    display: flex;
+    font-weight: bold;
+}
+.azkaban .nombre{
+    margin-bottom: 0.4rem;
+}
+.cont-azkaban{
+    margin-left: -0.4rem;
+    margin-bottom: -0.4rem;
+    background-color: #a01a24;
+    border-top: 3px solid #1a1710;
+    border-left: 1px solid #1a1710;
+    border-right: 3px solid #1a1710;
+    border-bottom: 1px solid #1a1710;
+    box-sizing: border-box;
+    flex-grow: 1;
+    width: 85%;
+}
+.cont-interno-azkaban{
+    background: url("images/prision.png") no-repeat 50% 100%;
+    background-size: 65%;
+    width: 100%;
+    height: 100%;
+    transform: rotate(45deg) translateY(-0.6rem);
+
+}
+
+.anden{
+    background: url("images/express.png") no-repeat 50% 90%;
+    background-size: 40%;
+}
+.dmle{
+    background: url("images/dmle.png") no-repeat 50% 60%;
+    background-size: 60%;
+    display: flex;
+    font-weight: bold;
+}
+.dmle-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+.pociones{
+    background: url("images/caldero.svg") no-repeat 50% 60%;
+    background-size: 50% 50%;
+}
+.hechizos{
+    background: url("images/varita.svg") no-repeat 50% 60%;
+    background-size: 60% 60%;
+}
+.comedor{
+    background: url("images/comedor.png") no-repeat 50% 80%;
+    background-size: 60%;
+}
+.gryffindor{
+    background: url("images/gryffindor.png") no-repeat 50% 80%;
+    background-size: 30%;
+}
+.hufflepuff{
+    background: url("images/hufflepuff.png") no-repeat 50% 70%;
+    background-size: 50%;
+}
+.ravenclaw{
+    background: url("images/ravenclaw.png") no-repeat 50% 70%;
+    background-size: 50%;
+}
+.slytherin{
+    background: url("images/slytherin.png") no-repeat 50% 80%;
+    background-size: 30%;
+}
+.impuesto1{
+    background: url("images/galeones.png") no-repeat 50% 80%;
+    background-size: 60%;
+}
+.impuesto2{
+    background: url("images/galeones.png") no-repeat 50% 80%;
+    background-size: 40%;
+}
+.nombre{
+    text-align: center;
+}
+.nombre-horizontal{
+    text-align: left;
+}
+.cont-tarjetas{
+    height: 4em;
+    display: flex;
+    gap: 0.5em;
+}
+.tarjeta-libertad{
+    height: 4em;
+    width: 7em;
+    background: rgb(253, 209, 89);
+    background: radial-gradient(circle at top left, rgb(253, 209, 89) 0%, rgb(217, 170, 17) 50%);
+    border-radius: 0.3em;
+    font-size: 0.79rem;
+    padding: 0.3em;
+
+}
+.tarjeta-invisibilidad{
+    height: 4em;
+    width: 7em;
+    border-radius: 0.3em;
+    font-size: 0.79rem;
+    border: 1px solid #f6d6b6;
+    color: #f6d6b6;
+    padding: 0.3em;
+}
+.div-tarjeta {
+    background-color: #1a1710;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    height: 1px;
+    margin-top: 0.3em;
+
+}
+.div-tarjeta-invisibilidad {
+    background-color: #f6d6b6;
+}
+.cont-texto-tarjeta{
+    text-align: center;
+}
+.texto-tarjeta{
+    display: inline-block;
+    margin-right: 0.2em;
+}
+.cantidad-tarjeta{
+    display: inline-block;
+    font-size: 0.79rem;
+}
+.div-interno-tarjeta{
+    border: 1px solid #1a1710;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tarjeta-invisibilidad .div-interno-tarjeta{
+    border: 1px solid #f6d6b6;
+}
+#div-tiempo{
+    z-index: 9;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: #f6d6b6;
+    font-size: 1.5em;
+}
+
+.modo{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #CEA340;
+    background: radial-gradient(circle at top, #F2D072 0%, #CEA340 60%);
+    z-index: 999;
+}
+.titulo-modo{
+    font-size: 3.247em;
+    margin-bottom: 1em;
+}
+.div-modo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 1em;
+}
+.btn-normal{
+    background-color: #a01a24;
+    width: 12em;
+    font-size: 1.602em;
+    color: #fff4d1;
+}
+.btn-normal:hover:not([disabled]){
+    opacity: 0.6;
+    background-color: #a01a24;
+    color: #fff4d1;
+
+}
+.btn-normal:disabled{
+    cursor: auto;
+    background-color: #907577;
+}
+.btn-contra{
+    width: 12em;
+    font-size: 1.602em;
+    background-color: #a01a24;
+    color: #fff4d1;
+}
+.btn-contra:hover:not([disabled]){
+    opacity: 0.6;
+    background-color: #a01a24;
+    color: #fff4d1;
+}
+.btn-contra:disabled{
+    cursor: auto;
+    background-color: #907577;
+}
+button.seleccionado{
+    background-color: #3A130B;
+}
+.btn-seleccionar{
+    margin-top: 3em;
+    width: 8em;
+    font-size: 1.266em;
+    color: #fff4d1;
+}
+.btn-seleccionar:hover:not([disabled]){
+    background-color: #22236a;
+    opacity: 0.6;
+    color: #fff4d1;
+}
+#tiempo{
+    font-size: 1.602em;
+    padding: 0.7em;
+}
+#fondo2{
+    z-index: 9999;
+}
+#silenciar{
+    position: absolute;
+    width: 100%;
+    text-align: right;
+    z-index: 99;
+}
+#btn-volumen{
+    background-color: transparent;
+    border: none;
+    margin-right: 4em;
+    margin-top: 1em;
+
+}
+#btn-volumen:hover .icono-volumen{
+    color: #9CCDEE;
+    cursor: pointer;
+}
+#btn-volumen .icono-volumen{
+    color: #f6d6b6;
+    font-size: 2em;
+}
+.invisible{
+    visibility: hidden;
+}
+
+.oculto{
+    display: none;
+}

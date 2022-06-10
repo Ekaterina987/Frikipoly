@@ -1,0 +1,1 @@
+Para iniciar el juego hay que abrir la página llamada index.html

@@ -1,0 +1,159 @@
+body{
+    font-family: "Libre Baskerville", serif;
+    background: url("images/mapa.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-size: 20px;
+    line-height: 1.5em;
+    min-height: 100vh;
+    margin: 0;
+}
+@font-face {
+    font-family: "Harry P";
+    src: url("fonts/HARRYP__.TTF");
+}
+.titulo{
+    color: #faf5ec;
+    font-size: 2.027em;
+    background-color: #3A130B;
+    padding: 1em;
+    margin: 0;
+    text-align: center;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+}
+.titulo2{
+    margin-top: 0;
+}
+.carousel-container{
+}
+.arrow{
+    background-color: transparent;
+    border: none;
+    font-size: 2em;
+    position: relative;
+    z-index: 99;
+    color: #1a1710;
+
+}
+.arrow:disabled{
+    color: #898585;
+}
+.arrow:hover:not([disabled]){
+    cursor: pointer;
+    color: #a01a24;
+}
+.contenedor-externo{
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 3em;
+}
+.oculto{
+    opacity: 0;
+    z-index: -1;
+}
+.pos-izquierda{
+    transform: translateX(-12em);
+}
+.pos-derecha{
+    transform: translateX(12em);
+}
+#contenedor-texto{
+    min-width: 960px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: calc(100vh - 10em);
+
+}
+.contenedor{
+    max-width: calc(960px - 6em);
+    min-height: calc(750px - 6em);
+    background-color: #faf5ec;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 3em;
+    position: absolute;
+    transition: opacity 0.5s, transform 0.5s;
+    transition-timing-function: linear;
+}
+#contenedor-elementos{
+    width: calc(960px - 6em);
+    height: calc(100vh - 10em);
+    margin-left: -6em;
+}
+#cont-boton{
+    text-align: center;
+    margin-top: -0.6em;
+}
+#empezar{
+    position: relative;
+    z-index: 999;
+}
+.boton{
+    border: none;
+    background-color: #22236a;
+    color: #f6d6b6;
+    font-family: "Libre Baskerville", serif;
+    border-radius: 0.8em;
+    padding: 0.5em 2em;
+    font-size: 1em;
+    transition: background-color 0.4s, color 0.4s;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    height: fit-content;
+}
+.boton:hover:not([disabled]){
+    cursor: pointer;
+    background-color: #a01a24;
+}
+.boton:disabled{
+    cursor: auto;
+    background-color: #898997;
+}
+.fondo{
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: flex;
+    align-items: center;
+}
+.titulo-popup{
+    font-family: "Harry P", serif;
+    font-size: 3.247em;
+    padding-bottom: 0.5em;
+}
+.div-mensaje{
+    background-color: #efdbcb;
+    width: 28em;
+    height: 18em;
+    padding: 4em;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    text-align: center;
+    background-image: url("images/seal.png");
+    background-repeat: no-repeat;
+    background-size: 10%;
+    background-position: center 35%;
+}
+.texto-popup{
+    margin-top: 2.5em;
+}
+.botones-popup{
+    display: flex;
+    gap: 1em;
+}
+.desaparecido{
+    display: none;
+}
