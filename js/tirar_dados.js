@@ -1,5 +1,6 @@
 /* VARIABLE QUE GUARDA LA TIRADA */
 var tirada;
+var contad = 0;
 /* FUNCIÓN QUE SE EJECUTA AL TIRAR LOS DADOS */
 function tirar(){
     sonido.play();

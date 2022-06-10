@@ -27,7 +27,7 @@ const t17 = new Tarjeta(17, "Has sido multado por departamento de regulación y 
 const t18 = new Tarjeta(18, "Paga la multa de 15 Galeones por realizar un conjuro obliviate a un profesor para que olvide realizar un examen", -15, "transaccion");
 const t19 = new Tarjeta(19, "Quedas libre de Azkaban", 0, "libertad");
 const t20 = new Tarjeta (20, "Lanza un hechizo 'reparo' y haz reparaciones en todos tus edificios paga por cada casa 25 Galeones paga por cada hotel 100 Galeones",0 , "pagoEdificios");
-const t21 = new Tarjeta (21, "Usasa un trasladador y te colocas en la casilla de salida", 0, "movimiento-casilla");
+const t21 = new Tarjeta (21, "Usas un trasladador y te colocas en la casilla de salida", 0, "movimiento-casilla");
 const t22 = new Tarjeta(22, "Usas un trasladador y te colocas en 'Grimmauld Place' si pasas por la casilla de salida cobras 200 Galeones", 11, "movimiento-casilla");
 const t23 = new Tarjeta(23, "Pagas por gastos de Hogwarts 150 Galeones", -150, "transaccion");
 const t24 = new Tarjeta(24, "Recibes la capa de invisibilidad", 0, "invisibilidad");
@@ -323,12 +323,14 @@ async function randomTarjeta(tipo){
         try{
             await popUpConfirm(tarjeta.texto);
             fondo1.classList.add("oculto");
+            btn.innerHTML = "Aceptar";
+            btnCancelar.innerHTML = "Cancelar";
             await asyncPagar("Has elegido pagar la multa de 10 Galeones","No puedes permitirte pagar la multa", Math.abs(tarjeta.numero), turno, null);
         }catch (e){
             fondo1.classList.add("oculto");
             await randomTarjeta("hechizos");
         }
-        fondo.classList.add("oculto");
+        fondo1.classList.add("oculto");
 
         btn.innerHTML = "Aceptar";
         btnCancelar.innerHTML = "Cancelar";
