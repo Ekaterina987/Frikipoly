@@ -1,5 +1,6 @@
 /* ANIMACIONES FICHA */
-
+/* Cambia el valor de la velocidad */
+var velocidad = 4;
 function animacionFichaArriba(ficha,tirada, posx, posy) {
     var start = null;
     var distancia = (parseInt(ladoTablero.slice(0,ladoTablero.length - 2)) /12) * tirada;
@@ -8,8 +9,8 @@ function animacionFichaArriba(ficha,tirada, posx, posy) {
         if (!start) start = timestamp;
         var progress = timestamp - start;
         ficha.style.transform = 'translate(' + posx + 'px, ' +
-            (posy - Math.min(progress / 4,distancia)) + 'px)';
-        if (progress < distancia*4) {
+            (posy - Math.min(progress / velocidad,distancia)) + 'px)';
+        if (progress < distancia*velocidad) {
             myRequest = window.requestAnimationFrame(step);
         }
     }
@@ -22,9 +23,9 @@ function animacionFichaDerecha(ficha, tirada, posx , posy) {
     function step(timestamp) {
         if (!start) start = timestamp;
         var progress = timestamp - start;
-        ficha.style.transform = 'translate(' + (posx + Math.min(progress / 4,distancia))  + 'px, ' +
+        ficha.style.transform = 'translate(' + (posx + Math.min(progress / velocidad,distancia))  + 'px, ' +
             posy + 'px)';
-        if (progress < distancia*4) {
+        if (progress < distancia*velocidad) {
             myRequest = window.requestAnimationFrame(step);
         }
     }
@@ -38,8 +39,8 @@ function animacionFichaAbajo(ficha, tirada, posx, posy) {
         if (!start) start = timestamp;
         var progress = timestamp - start;
         ficha.style.transform = 'translate(' + posx + 'px, ' + (posy +
-            Math.min(progress / 4,distancia)) + 'px)';
-        if (progress < distancia*4) {
+            Math.min(progress / velocidad,distancia)) + 'px)';
+        if (progress < distancia*velocidad) {
             myRequest = window.requestAnimationFrame(step);
         }
     }
@@ -52,9 +53,9 @@ function animacionFichaIzquierda(ficha, tirada, posx , posy) {
     function step(timestamp) {
         if (!start) start = timestamp;
             var progress = timestamp - start;
-            ficha.style.transform = 'translate(' + (posx - Math.min(progress / 4,distancia))  + 'px, ' +
+            ficha.style.transform = 'translate(' + (posx - Math.min(progress / velocidad,distancia))  + 'px, ' +
                 posy + 'px)';
-            if (progress < distancia*4) {
+            if (progress < distancia*velocidad) {
                 myRequest = window.requestAnimationFrame(step);
             }
     }
@@ -89,9 +90,9 @@ function animacionFichaCarcel(ficha, casilla){
     function step(timestamp) {
         if (!start) start = timestamp;
         var progress = timestamp - start;
-        ficha.style.transform = 'translate(' + (posx - ((progresHor*progress)/4))  + 'px, ' +
-            (posy + ((progresVert*progress)/4)) + 'px)';
-        if (progress < (distancia*4)) {
+        ficha.style.transform = 'translate(' + (posx - ((progresHor*progress)/velocidad))  + 'px, ' +
+            (posy + ((progresVert*progress)/velocidad)) + 'px)';
+        if (progress < (distancia*velocidad)) {
             myRequest = window.requestAnimationFrame(step);
         }
     }

@@ -1,7 +1,15 @@
+/* Pon un número entre 700 y 2000  para cambiar el tamaño del tablero */
+*{
+    --lado_tablero:900px;
+}
+/* Cambia los valores a números entre 0 y 255  para cambiar el color de fondo */
+*{
+    --color_fondo:rgb(75, 6, 18);
+}
+
 *{
     --lado_celda: calc(var(--lado_tablero) / 12);
     --lado_celda_largo: calc(var(--lado_celda) * 1.5);
-    --lado_tablero: 900px;
     --fuente_tablero: 0.555em;
     --ficha_size: 1.8rem;
     --barra_corto: calc(var(--lado_celda) / 5);
@@ -18,7 +26,7 @@
 body{
     margin: 0;
     font-family: 'Libre Baskerville', serif;
-    background-color: rgb(75, 6, 18);
+    background-color: var(--color_fondo);
 }
 h3{
     font-size: 1.5em;
@@ -105,12 +113,16 @@ p{
 .transparente{
     opacity: 0;
 }
+/* Cambia el valor de la url a images/banner2.svg */
+/* Cambia el valor de padding-top a 4em */
+.tirada-dados{
+    background: url("images/ribbonbanner.svg") no-repeat 50% 0;
+    padding-top: 0.5em;
+}
 .tirada-dados{
     padding-bottom: 4em;
-    padding-top: 0.5em;
     width: 24em;
     background-size: contain;
-    background: url("images/ribbonbanner.svg") no-repeat 50% 0;
 }
 
 .absoluto{
@@ -120,9 +132,12 @@ p{
     right: 0;
     margin: 0 auto;
 }
+/* Cambia el font-family a Papyrus */
+#titulo-juego{
+    font-family: "Harry P", serif;
+}
 #titulo-juego{
     text-align: center;
-    font-family: "Harry P", serif;
     font-size: 3.653em;
     width: fit-content;
     margin: 0;

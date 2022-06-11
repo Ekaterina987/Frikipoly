@@ -282,7 +282,7 @@ var promesaAzkaban = function(ficha, casilla)
 
         setTimeout(function(){
             resolve();
-        }, (distancia*4));
+        }, (distancia*velocidad));
     });
 }
 /* FUNCIÓN QUE ESPERA A QUE SE MUEVA LA FICHA PARA DESPUÉS HABILITAR EL BOTÓN DE FINALIZAR EL TURNO */
@@ -674,6 +674,7 @@ async function getModo(){
         document.getElementById("fondo2").classList.remove("oculto");
 
     });
+    /* Cambia el audio a ./audio/fuegos.mp3 */
     musicaFondo = new audio("./audio/hedwigs-theme.mp3");
     function seleccionar() {
         return new Promise((resolve) => {
