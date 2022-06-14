@@ -35,12 +35,8 @@ async function turnoJugador(){
             if (turno.tarjetasLibertad > 0) {
                 try {
                     await popUpConfirm("¿Quieres usar una tarjeta de libertad para salir de Azkaban?");
-                    const fondo = document.getElementById("fondo1");
-                    fondo.classList.add("oculto");
                     /* SI EL JUGADOR CONFIRMA QUE QUIERE USAR UNA SE MUESTRA UN MENSAJE INFORMATIVO*/
                     await popUp("Has salido de Azkabán");
-                    const fondo1 = document.getElementById("fondo");
-                    fondo1.classList.add("oculto");
                     /* SE HABILITA LA TIRADA DE DADOS */
                     let btnTirar = document.getElementById("btnDados");
                     btnTirar.disabled = false;
@@ -66,8 +62,6 @@ async function turnoJugador(){
                         }
                     }
                 } catch (e) {
-                    const fondo = document.getElementById("fondo1");
-                    fondo.classList.add("oculto");
                     /* SI EL JUGADOR NO QUIERE USAR UNA TARJETA Y SE LO PUEDE PERMITIR PREGUNTA SI QUIERE SALIR DE LA CÁRCEL */
                     if (turno.dinero > 50) {
                         await pagarAzkaban();
@@ -86,8 +80,6 @@ async function turnoJugador(){
             /* SI HA CUMPLIDO SU CONDENA SE LE PERMITE TIRAR LOS DADOS */
             async function asyncMensajeSalirAzkaban() {
                 await popUp("Has cumplido tu condena y puedes salir de Azkabán");
-                const fondo = document.getElementById("fondo");
-                fondo.classList.add("oculto");
             }
             await asyncMensajeSalirAzkaban();
             /* SE SACA AL JUGADOR DE AZKABAN Y SE REESTABLECEN LOS TURNOS EN AZKABAN */
@@ -116,8 +108,6 @@ async function turnoJugador(){
         /* SE LANZA UN MENSAJE INFORMATIVO */
         async function asyncMensajeAzkaban() {
             await popUp("No puedes salir de Azkabán");
-            const fondo = document.getElementById("fondo");
-            fondo.classList.add("oculto");
         }
         await asyncMensajeAzkaban();
         turnoComprar();
@@ -128,12 +118,8 @@ async function turnoJugador(){
         async function asyncAzkaban() {
             try {
                 await popUpConfirm("¿Quieres pagar 50 Galeones para salir de Azkabán?");
-                const fondo = document.getElementById("fondo1");
-                fondo.classList.add("oculto");
                 salirAzkaban();
             } catch (error) {
-                const fondo = document.getElementById("fondo1");
-                fondo.classList.add("oculto");
                 turnoComprar();
             }
         }
@@ -144,8 +130,6 @@ async function turnoJugador(){
             async function asyncSalir() {
                 /* MENSAJE INFORMATIVO */
                 await popUp("Has salido de Azkabán");
-                const fondo = document.getElementById("fondo");
-                fondo.classList.add("oculto");
                 /* SE RESTA EL DINERO AL JUGADOR Y SE LE SACA DE AZKABAN, SE REESTABLECEN LOS TURNOS EN AZKABAN */
                 turno.dinero -= 50;
                 turno.azkaban = false;
@@ -196,8 +180,6 @@ async function jugadorJuego(inicial, final){
     if(parseInt(inicial.id) >= parseInt(final.id) && !atras){
         async function asyncCasillaSalida() {
             await popUp("Has pasado por la casilla de salida, recibes 200 Galeones");
-            const fondo = document.getElementById("fondo");
-            fondo.classList.add("oculto");
             turno.dinero+=200;
             actualizarDinero(turno);
         }
@@ -214,8 +196,6 @@ async function jugadorJuego(inicial, final){
         /* SE MUESTRA UN MENSAJE Y SE REALIZA EL MOVIMIENTO */
         async function asyncIrAzkaban() {
             await popUp("Vas a Azkabán");
-            const fondo = document.getElementById("fondo");
-            fondo.classList.add("oculto");
             const ficha = document.getElementById("ficha" + turno.id);
             await asyncMovimientoAzkaban(ficha, casiFinal);
         }
@@ -267,8 +247,14 @@ async function jugadorJuego(inicial, final){
         }
         if(!finPartida){
             turnoComprar();
+            habilitarVentaPropiedadAJugador();
         }
     }
+}
+function habilitarVentaPropiedadAJugador(){
+    const btnVenta = document.getElementById("btnVentaJug" + turno.id);
+    btnVenta.disabled = false;
+    btnVenta.addEventListener("click", habilitarClickVentaJugador);
 }
 /* SE CREA UNA PROMESA QUE SE EJECUTARÁ CUANDO SE MUEVA LA CASILLA A LA POSICIÓN 10 (AZKABÁN) */
 var promesaAzkaban = function(ficha, casilla)
@@ -295,19 +281,13 @@ async function asyncMovimientoAzkaban(ficha, casilla) {
 async function asyncPagar(textoPagar, textoPerder, cantidad, jugadorPaga, jugadorRecibe) {
     /* SE MUESTRA UN POPUP INFORMATIVO */
     await popUp(textoPagar);
-    const fondo = document.getElementById("fondo");
-    fondo.classList.add("oculto");
     /* SE COMPRUEBA SI EL JUGADOR TIENE TARJETAS DE INVISIBILIDAD */
     if(jugadorPaga.tarjetasInvisibilidad>0){
         try{
             /* SE PIDE CONFIRMACIÓN PARA USAR LA TARJETA */
             await popUpConfirm("¿Quieres usar una tarjeta de invisibilidad para evadir el pago?");
-            const fondo1 = document.getElementById("fondo1");
-            fondo1.classList.add("oculto");
             /* SE MUESTRA UN MENSAJE INFORMATIVO */
             await popUp("Has evadido el pago");
-            const fondo2 = document.getElementById("fondo");
-            fondo2.classList.add("oculto");
             /* SE RESTA UNA TARJETA DE INVISIBILIDAD AL JUGADOR */
             turno.tarjetasInvisibilidad--;
             /* SI YA NO TIENE MÁS TARJETAS ESTA SE OCULTA */
@@ -326,8 +306,6 @@ async function asyncPagar(textoPagar, textoPerder, cantidad, jugadorPaga, jugado
             }
         }catch (e){
             /* SI NO QUIERE USAR LA TARJETA SE PROCEDE AL PAGO */
-            const fondo1 = document.getElementById("fondo1");
-            fondo1.classList.add("oculto");
             pagar(textoPerder, cantidad);
         }
 
@@ -384,8 +362,6 @@ async function asyncPagar(textoPagar, textoPerder, cantidad, jugadorPaga, jugado
 async function asyncPerder(texto){
     await popUp(texto);
     clearInterval(intervalo);
-    const fondo = document.getElementById("fondo");
-    fondo.classList.add("oculto");
     perder();
 }
 /* FUNCIÓN QUE SE EJECUTA EN CASO DE QUE SE PIERDA */
@@ -454,8 +430,6 @@ async function finalPartida(tipoFinal){
         /* SE MUESTRA UN MENSAJE INFORMATIVO */
         async function asyncFin(){
             await popUp("El juego ha terminado, ha ganado " + ganador.nombre);
-            const fondo = document.getElementById("fondo");
-            fondo.classList.add("oculto");
         }
         /* SE MUESTRAN LAS PUNTUACIONES DE LOS JUGADORES */
         async function asyncScoreboard(){

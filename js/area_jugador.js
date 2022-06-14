@@ -38,6 +38,12 @@ function generarJugador(nombre){
     btnComprarCasas.classList.add("boton");
     btnComprarCasas.id = "btnComprarCasas" + cont;
     btnComprarCasas.disabled = true;
+    /* BOTÓN VENDER PROPIEDADES A JUGADORES*/
+    const btnVentaJug = document.createElement("button");
+    btnVentaJug.classList.add("boton");
+    btnVentaJug.appendChild(document.createTextNode("Vender propiedad a jugador"));
+    btnVentaJug.id = "btnVentaJug" + cont;
+    btnVentaJug.disabled = true;
     /* BOTÓN VENDER PROPIEDADES */
     const btnVenta = document.createElement("button");
     btnVenta.classList.add("boton");
@@ -62,6 +68,7 @@ function generarJugador(nombre){
     contenedor.appendChild(contTarjetas);
     contenedor.appendChild(btnComprar);
     contenedor.appendChild(btnComprarCasas);
+    contenedor.appendChild(btnVentaJug);
     contenedor.appendChild(btnVenta);
     contenedor.appendChild(btnVentaCasas);
     contenedor.appendChild(txtDeuda);

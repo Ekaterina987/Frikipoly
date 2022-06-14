@@ -83,6 +83,7 @@ class Jugador{
         if(prop !== -1) {
             this.propiedades.splice(prop, 1);
         }
+        propiedad.propietario = null;
     }
 }
 /* CASILLA */

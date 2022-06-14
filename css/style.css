@@ -508,6 +508,10 @@ h4{
     gap: 2em;
     text-align: center;
 }
+.div-mensaje-cantidad{
+    width: 450px;
+    height: 300px;
+}
 .mensaje-popup{
 
 }

@@ -4,12 +4,8 @@ function comprar(){
     async function asyncConfirmacion() {
         try {
             await popUpConfirm("¿Quieres comprar " + casiFinal.nombre + "?");
-            const fondo = document.getElementById("fondo1");
-            fondo.classList.add("oculto");
             compPropiedad();
         } catch (error) {
-            const fondo = document.getElementById("fondo1");
-            fondo.classList.add("oculto");
         }
     }
     asyncConfirmacion();
@@ -92,12 +88,8 @@ function comprarCasa(){
     async function asyncCasa() {
         try {
             await popUpConfirm(texto);
-            const fondo = document.getElementById("fondo1");
-            fondo.classList.add("oculto");
             compCasa();
         } catch (error) {
-            const fondo = document.getElementById("fondo1");
-            fondo.classList.add("oculto");
         }
     }
     asyncCasa();

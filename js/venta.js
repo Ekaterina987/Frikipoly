@@ -23,6 +23,89 @@ function habilitarClickCasillas(){
         }
     })
 }
+/* SE HABILITA LA SELECCIÓN DE UNA CASILLA PARA SU VENTA O LA VENTA DE SUS CASAS/HOTELES */
+async function habilitarClickVentaJugador(){
+    /* PARA CADA UNA DE LAS PROPIEDADES */
+    turno.propiedades.forEach(propiedad=>{
+        const casPropiedad = document.getElementById(propiedad.id);
+        /* SE COMPRUEBA SU TIPO */
+        if(propiedad.tipo==="propiedad"){
+            casPropiedad.removeEventListener("click", comprarCasa);
+            /* SI LA PROPIEDAD NO TIENE CASAS Y EL JUGADOR NO TIENE CASAS EN LAS PROPIEDADES SE PUEDE VENDER LA CASILLA */
+            if(propiedad.casas===0 && turno.calcularMayorCasas(propiedad.grupo) === 0){
+                casPropiedad.classList.add("pinchable");
+                casPropiedad.addEventListener("click", venderProp);
+            }
+        }else{
+           casPropiedad.addEventListener("click", venderProp);
+           casPropiedad.classList.add("pinchable");
+        }
+    })
+}
+async function venderProp(){
+    casi = tablero[this.id - 1];
+    try{
+        await popUpConfirm("¿Quieres vender " + casi.nombre +  "?");
+        await popUp("Selecciona el jugador al que quieres vender " + casi.nombre + ".");
+        habilitarSelJugador();
+    }catch (e){
+
+    }
+}
+function habilitarSelJugador(){
+    jugadoresEnPie.forEach(jugador=>{
+        const titulo = document.getElementById("tnombre" + jugador.id)
+        titulo.classList.add("pinchable");
+        titulo.addEventListener("click", selJugador);
+    });
+}
+async function selJugador(){
+    let id = this.id;
+    let numJugador = parseInt(id.substr(7, 1));
+    let jugador = jugadoresEnPie[numJugador - 1];
+    try {
+        await popUpConfirm("¿Quieres vender " + casi.nombre + " a " + jugador.nombre + "?");
+        await selCantidad(jugador);
+    }catch (e){
+    }
+
+}
+async function selCantidad(jugador){
+    let cantidad;
+    try{
+        await popUpCantidad();
+        const inputCantidad = document.getElementById("cantidad");
+        /*123*/
+        cantidad = parseInt(inputCantidad.value);
+        try{
+            await popUpConfirm("¿" + jugador.nombre + " quieres comprar " + casi.nombre + " por " + cantidad + "galeones?");
+            jugador.dinero-=cantidad;
+            actualizarDinero(jugador);
+            turno.dinero+=cantidad;
+            actualizarDinero(turno);
+
+            /* SI EL JUGADOR POSEÍA EL GRUPO DE CASILLAS ENTONCES SE ELIMINA DE SU POSESIÓN */
+            if(turno.tieneGrupo(casi.grupo)){
+                turno.quitarGrupo(casi.grupo);
+            }
+            /* SE QUITA LA PROPIEDAD DEL JUGADOR */
+            turno.quitarPropiedad(casi);
+
+            casi.propietario = jugador;
+            jugador.propiedades.push(casi);
+
+            casi.grupo.getPropietario();
+
+            console.log(casi.propietario);
+            console.log(casi.grupo.propietario);
+
+        }catch (e){
+
+        }
+    }catch (e){
+
+    }
+}
 /* SE HABILITA EL BOTÓN PARA VENDER CASAS O PROPIEDADES */
 function habilitar(propiedad, jugador){
         /* SE COMPRUEBA EL TIPO DE CASILLA */
@@ -53,12 +136,8 @@ function ventaCasilla(){
     async function asyncVenta() {
         try {
             await popUpConfirm("¿Quieres vender " + casi.nombre + " por " + (casi.precio/2) +  " Galeones?");
-            const fondo = document.getElementById("fondo1");
-            fondo.classList.add("oculto");
             venderPropiedad();
         } catch (error) {
-            const fondo = document.getElementById("fondo1");
-            fondo.classList.add("oculto");
         }
     }
     asyncVenta();
@@ -137,12 +216,8 @@ function ventaCasa(){
     async function asyncVentaCasa() {
         try {
             await popUpConfirm(texto);
-            const fondo = document.getElementById("fondo1");
-            fondo.classList.add("oculto");
             venderCasa();
         } catch (error) {
-            const fondo = document.getElementById("fondo1");
-            fondo.classList.add("oculto");
         }
     }
     asyncVentaCasa();

@@ -54,7 +54,6 @@ async function randomTarjeta(tipo){
     const fich = document.getElementById("ficha" + turno.id);
     const casillaAntes = document.getElementById(turno.posicion + 1);
     const btnFinalizar = document.getElementById("btnFinTurno");
-    const fondo = document.getElementById("fondo");
 
     /* REALIZA UNA ACCIÓN DEPENDIENDO DEL TIPO DE TARJETA*/
     switch (tarjeta.tipo){
@@ -98,7 +97,6 @@ async function randomTarjeta(tipo){
     /* POR DEFECTO SOLO SE MUESTRA EL TEXTO DE LA TARJETA */
     async function defecto(){
         await popUp(tarjeta.texto);
-        fondo.classList.add("oculto");
     }
     /* SI ES UNA TRANSACCIÓN SE SUMA O RESTA DINERO AL JUGADOR */
     async function asyncTransaccion(){
@@ -109,12 +107,10 @@ async function randomTarjeta(tipo){
             turno.dinero+=tarjeta.numero;
             actualizarDinero(turno);
         }
-        fondo.classList.add("oculto");
     }
     /* FUNCIÓN QUE SE EJECUTA EN CASO DE QUE SE DEBA MOVER A UNA CASILLA CONCRETA HACIA ADELANTE */
     async function asyncMovimientoCasilla(){
         await popUp(tarjeta.texto);
-        fondo.classList.add("oculto");
         movimCasilla();
 
         function movimCasilla(){
@@ -134,7 +130,6 @@ async function randomTarjeta(tipo){
     /* FUNCIÓN QUE SE EJECUTA EN CASO DE QUE SE DEBA MOVER UN NUMERO HACIA ADELANTE */
     async function asyncMovimientoCantidad(){
         await popUp(tarjeta.texto);
-        fondo.classList.add("oculto");
         movimCantidad();
 
         function movimCantidad(){
@@ -149,7 +144,6 @@ async function randomTarjeta(tipo){
     async function asyncMovimAzkaban(){
         await popUp(tarjeta.texto);
 
-        fondo.classList.add("oculto");
         const ficha = document.getElementById("ficha" + turno.id);
         casiFinal = tablero[turno.posicion];
         turno.azkaban = true;
@@ -161,7 +155,6 @@ async function randomTarjeta(tipo){
     /* FUNCIÓN QUE SE EJECUTA EN CASO DE QUE SE DEBA MOVER A UNA CASILLA CONCRETA HACIA ATRÁS */
     async function asyncMovimientoAtrasCasilla(){
         await popUp(tarjeta.texto);
-        fondo.classList.add("oculto");
         movimAtrasCas();
 
         function movimAtrasCas(){
@@ -182,7 +175,6 @@ async function randomTarjeta(tipo){
     async function asyncMovimientoAtrasCantidad(){
         await popUp(tarjeta.texto);
 
-        fondo.classList.add("oculto");
         movimAtrasCan();
         function movimAtrasCan(){
             btnFinalizar.disabled = true;
@@ -199,7 +191,6 @@ async function randomTarjeta(tipo){
     /* FUNCIÓN QUE SE EJECUTA EN CASO DE QUE SE DEBA RECIBIR DINERO DE UN JUGADOR */
     async function asyncTransaccionJugador(){
         await popUp(tarjeta.texto);
-        fondo.classList.add("oculto");
         for (const jugador of jugadoresEnPie) {
             if(jugador!==turno){
                 await asyncPagar(jugador.nombre + " debes pagar 10 Galeones a " + turno.nombre,
@@ -228,7 +219,6 @@ async function randomTarjeta(tipo){
      DICHA TARJETA PODRÁ SER UTILIZADA PARA SALIR DE AZKABAN */
     async function asyncLibertad(){
         await popUp(tarjeta.texto);
-        fondo.classList.add("oculto");
 
         const tarjetaLibertad = document.createElement("div");
         tarjetaLibertad.id="tarjeta-libertad" + turno.id;
@@ -271,7 +261,6 @@ async function randomTarjeta(tipo){
      DICHA TARJETA PODRÁ SER UTILIZADA PARA EVADIR UN PAGO */
     async function asyncInvisibilidad() {
         await popUp(tarjeta.texto);
-        fondo.classList.add("oculto");
 
 
         const tarjetaInvisibilidad = document.createElement("div");
@@ -313,7 +302,6 @@ async function randomTarjeta(tipo){
     }
     /* FUNCIÓN QUE COMPRUEBA SI EL JUGADOR PREFIERE PAGAR UNA MULTA O SACAR UNA CARTA ALEATORIA DE HECHIZOS */
     async function asyncTransaccionHechizos(){
-        const fondo1 = document.getElementById("fondo1");
         const btn = document.getElementById("btn-aceptar1");
 
         const btnCancelar = document.getElementById("btn-cancelar");
@@ -322,15 +310,12 @@ async function randomTarjeta(tipo){
         btnCancelar.innerHTML = "Tarjeta";
         try{
             await popUpConfirm(tarjeta.texto);
-            fondo1.classList.add("oculto");
             btn.innerHTML = "Aceptar";
             btnCancelar.innerHTML = "Cancelar";
             await asyncPagar("Has elegido pagar la multa de 10 Galeones","No puedes permitirte pagar la multa", Math.abs(tarjeta.numero), turno, null);
         }catch (e){
-            fondo1.classList.add("oculto");
             await randomTarjeta("hechizos");
         }
-        fondo1.classList.add("oculto");
 
         btn.innerHTML = "Aceptar";
         btnCancelar.innerHTML = "Cancelar";
