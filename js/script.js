@@ -251,11 +251,7 @@ async function jugadorJuego(inicial, final){
         }
     }
 }
-function habilitarVentaPropiedadAJugador(){
-    const btnVenta = document.getElementById("btnVentaJug" + turno.id);
-    btnVenta.disabled = false;
-    btnVenta.addEventListener("click", habilitarClickVentaJugador);
-}
+
 /* SE CREA UNA PROMESA QUE SE EJECUTARÁ CUANDO SE MUEVA LA CASILLA A LA POSICIÓN 10 (AZKABÁN) */
 var promesaAzkaban = function(ficha, casilla)
 {
@@ -544,6 +540,9 @@ async function finalizar(){
     mensaje.classList.add("transparente");
 
     let indiceTurno = jugadoresEnPie.indexOf(turno) + 1;
+
+    const btnVenta = document.getElementById("btnVentaJug" + turno.id);
+    btnVenta.disabled = true;
     /* SE ESTABLECE EL TURNO AL SIGUIENTE JUGADOR */
     turno = jugadoresEnPie[indiceTurno % jugadoresEnPie.length];
     /* SE MUESTRA LA ANIMACIÓN DEL SUBRAYADO DEL JUGADOR */
@@ -613,6 +612,11 @@ async function start(){
     /* SE ESTABLECE EL PRIMER TURNO PARA EL PRIMER JUGADOR */
     turno = jugadores[0];
 
+    jugadores.forEach(jugador=>{
+        const btnVenta = document.getElementById("btnVentaJug" + jugador.id);
+        btnVenta.addEventListener("click", habilitarClickVentaJugador);
+    });
+
     /* SE ESTABLECE LA POSICIÓN QUE TENDRÁ EL PRIMER PERDEDOR */
     posicionJugador = jugadores.length;
     /* SE MUESTRA LA ANIMACIÓN DEL SUBRAYADO DEL PRIMER JUGADOR*/
@@ -635,17 +639,17 @@ async function getModo(){
     /* AL ESCOGER EL MODO DE JUEGO A CONTRA-RELOJ SE GUARDA ESTE EN UNA COOKIE,
      APARECE UN POP-UP PIDIENDO EL TIEMPO DE JUEGO, SE GUARDA EN UNA COOKIE
      Y SE HABILITA LA POSIBILIDAD DE COMENZAR EL JUEGO */
-    const btnAc =document.getElementById("btn-aceptar2");
+    const btnAc =document.getElementById("btn-aceptar-tiempo");
     btnAc.addEventListener("click", ()=>{
         localStorage.setItem("horas", document.getElementById("tiempo").value);
-        document.getElementById("fondo2").classList.add("oculto");
+        document.getElementById("popup-tiempo").classList.add("oculto");
     });
     btnContra.addEventListener("click", ()=>{
         localStorage.setItem("tipo-juego" , "contrarreloj");
         btnNormal.classList.remove("seleccionado");
         btnContra.classList.add("seleccionado");
         btnSel.disabled = false;
-        document.getElementById("fondo2").classList.remove("oculto");
+        document.getElementById("popup-tiempo").classList.remove("oculto");
 
     });
     /* Cambia el audio a ./audio/fuegos.mp3 */

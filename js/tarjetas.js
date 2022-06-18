@@ -302,9 +302,9 @@ async function randomTarjeta(tipo){
     }
     /* FUNCIÓN QUE COMPRUEBA SI EL JUGADOR PREFIERE PAGAR UNA MULTA O SACAR UNA CARTA ALEATORIA DE HECHIZOS */
     async function asyncTransaccionHechizos(){
-        const btn = document.getElementById("btn-aceptar1");
+        const btn = document.getElementById("btn-aceptar-confirm");
 
-        const btnCancelar = document.getElementById("btn-cancelar");
+        const btnCancelar = document.getElementById("btn-cancelar-confirm");
 
         btn.innerHTML = "Pagar";
         btnCancelar.innerHTML = "Tarjeta";

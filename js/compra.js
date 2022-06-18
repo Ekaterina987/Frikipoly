@@ -43,6 +43,7 @@ function comprar(){
                 habilitarComp(cas, turno);
             })
         });
+        habilitarVentaPropiedadAJugador();
 
     }
 }

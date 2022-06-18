@@ -23,8 +23,15 @@ function habilitarClickCasillas(){
         }
     })
 }
+function habilitarVentaPropiedadAJugador(){
+    if(turno.propiedades.length > 0){
+        const btnVenta = document.getElementById("btnVentaJug" + turno.id);
+        btnVenta.disabled = false;
+    }
+}
 /* SE HABILITA LA SELECCIÓN DE UNA CASILLA PARA SU VENTA O LA VENTA DE SUS CASAS/HOTELES */
 async function habilitarClickVentaJugador(){
+    await popUp("Selecciona la propiedad que quieres vender.");
     /* PARA CADA UNA DE LAS PROPIEDADES */
     turno.propiedades.forEach(propiedad=>{
         const casPropiedad = document.getElementById(propiedad.id);
@@ -34,43 +41,47 @@ async function habilitarClickVentaJugador(){
             /* SI LA PROPIEDAD NO TIENE CASAS Y EL JUGADOR NO TIENE CASAS EN LAS PROPIEDADES SE PUEDE VENDER LA CASILLA */
             if(propiedad.casas===0 && turno.calcularMayorCasas(propiedad.grupo) === 0){
                 casPropiedad.classList.add("pinchable");
+                casPropiedad.classList.add("seleccionable");
                 casPropiedad.addEventListener("click", venderProp);
             }
         }else{
            casPropiedad.addEventListener("click", venderProp);
            casPropiedad.classList.add("pinchable");
+            casPropiedad.classList.add("seleccionable");
         }
     })
 }
 async function venderProp(){
     casi = tablero[this.id - 1];
+    this.classList.remove("seleccionable");
+    this.classList.add("seleccionado");
     try{
         await popUpConfirm("¿Quieres vender " + casi.nombre +  "?");
-        await popUp("Selecciona el jugador al que quieres vender " + casi.nombre + ".");
-        habilitarSelJugador();
+        try{
+            await popUpSeleccion();
+            selJugador();
+        }catch (e){
+
+        }
+
     }catch (e){
 
     }
-}
-function habilitarSelJugador(){
-    jugadoresEnPie.forEach(jugador=>{
-        const titulo = document.getElementById("tnombre" + jugador.id)
-        titulo.classList.add("pinchable");
-        titulo.addEventListener("click", selJugador);
-    });
 }
 async function selJugador(){
-    let id = this.id;
-    let numJugador = parseInt(id.substr(7, 1));
-    let jugador = jugadoresEnPie[numJugador - 1];
     try {
-        await popUpConfirm("¿Quieres vender " + casi.nombre + " a " + jugador.nombre + "?");
-        await selCantidad(jugador);
+        await popUpConfirm("¿Quieres vender " + casi.nombre + " a " + comprador.nombre + "?");
+        try{
+            await selCantidad();
+        }catch (e){
+
+        }
+
     }catch (e){
     }
 
 }
-async function selCantidad(jugador){
+async function selCantidad(){
     let cantidad;
     try{
         await popUpCantidad();
@@ -78,9 +89,9 @@ async function selCantidad(jugador){
         /*123*/
         cantidad = parseInt(inputCantidad.value);
         try{
-            await popUpConfirm("¿" + jugador.nombre + " quieres comprar " + casi.nombre + " por " + cantidad + "galeones?");
-            jugador.dinero-=cantidad;
-            actualizarDinero(jugador);
+            await popUpConfirm("¿" + comprador.nombre + " quieres comprar " + casi.nombre + " por " + cantidad + "galeones?");
+            comprador.dinero-=cantidad;
+            actualizarDinero(comprador);
             turno.dinero+=cantidad;
             actualizarDinero(turno);
 
@@ -91,8 +102,8 @@ async function selCantidad(jugador){
             /* SE QUITA LA PROPIEDAD DEL JUGADOR */
             turno.quitarPropiedad(casi);
 
-            casi.propietario = jugador;
-            jugador.propiedades.push(casi);
+            casi.propietario = comprador;
+            comprador.propiedades.push(casi);
 
             casi.grupo.getPropietario();
 

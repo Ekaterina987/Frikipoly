@@ -82,7 +82,7 @@ p{
     cursor: auto;
     background-color: #907577;
 }
-#btn-cancelar:hover{
+#btn-cancelar-confirm:hover{
     background-color: #3e0004;
     color: #f6d6b6;
 }
@@ -854,7 +854,7 @@ button.seleccionado{
     font-size: 1.602em;
     padding: 0.7em;
 }
-#fondo2{
+#popup-tiempo{
     z-index: 9999;
 }
 #silenciar{
@@ -884,4 +884,16 @@ button.seleccionado{
 
 .oculto{
     display: none;
+}
+.seleccionable{
+    background-color: rgba(160, 26, 36, 0.5);
+    box-shadow: 0px 0px 3px 3px rgba(160, 26, 36, 1);
+}
+.seleccionable:hover{
+    background-color: rgba(34, 35, 106, 0.5);
+    box-shadow: 0px 0px 5px 5px rgba(34, 35, 106, 1);
+}
+.seleccionado{
+    background-color: rgba(58, 19, 11, 0.5);
+    box-shadow: 0px 0px 3px 3px rgba(58, 19, 11, 1);
 }

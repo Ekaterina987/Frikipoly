@@ -38,7 +38,7 @@
     <div id="div-tiempo"><p id="p-tiempo"></p></div>
     <div class="gradiente"></div>
     <div class="gradiente1"></div>
-    <div class="fondo oculto" id="fondo">
+    <div class="fondo oculto" id="popup">
         <div class="div-mensaje" id="div-mensaje">
             <p class="mensaje-popup" id="mensaje-popup">
             </p>
@@ -50,34 +50,34 @@
     <div id="silenciar">
         <button id="btn-volumen"><i class="fas fa-volume-down icono-volumen" id="icono-volumen"></i></button>
     </div>
-    <div class="fondo oculto" id="fondo1">
-        <div class="div-mensaje" id="div-mensaje1">
-            <p class="mensaje-popup" id="mensaje-popup1">
+    <div class="fondo oculto" id="popup-confirmar">
+        <div class="div-mensaje" id="div-mensaje-confirm">
+            <p class="mensaje-popup" id="mensaje-popup-confirm">
             </p>
             <div class="botones-popup">
-                <button class="btn-aceptar boton" id="btn-aceptar1">
+                <button class="btn-aceptar boton" id="btn-aceptar-confirm">
                     Aceptar
                 </button>
-                <button class="btn-cancelar boton" id="btn-cancelar">
+                <button class="btn-cancelar boton" id="btn-cancelar-confirm">
                     Cancelar
                 </button>
             </div>
         </div>
     </div>
-    <div class="fondo oculto" id="fondo2">
-        <div class="div-mensaje" id="div-tiempo2">
+    <div class="fondo oculto" id="popup-tiempo">
+        <div class="div-mensaje" id="div-mensaje-tiempo">
             <h4>Selecciona el tiempo en horas y minutos</h4>
             <input type="time" id="tiempo" name="tiempo"
                    min="00:01" max="24:00" value="02:00" required>
-            <button type="button" class="btn-aceptar boton" id="btn-aceptar2">
+            <button type="button" class="btn-aceptar boton" id="btn-aceptar-tiempo">
                 Aceptar
             </button>
 
         </div>
     </div>
-    <div class="fondo oculto" id="fondo3">
-        <div class="div-mensaje div-mensaje-cantidad" id="div-mensaje3">
-            <p class="mensaje-popup" id="mensaje-popup3">Selecciona una cantidad por la que quieres vender la propiedad o escribe una
+    <div class="fondo oculto" id="popup-venta">
+        <div class="div-mensaje div-mensaje-cantidad" id="div-mensaje-venta">
+            <p class="mensaje-popup" id="mensaje-popup-venta">Selecciona una cantidad por la que quieres vender la propiedad o escribe una
             </p>
             <div class="botones-popup">
                 <button class="btn-cantidad boton" id="btn-100">
@@ -98,10 +98,27 @@
                 <input type="number" id="cantidad" name="cantidad">
             </div>
             <div class="botones-popup">
-                <button class="btn-aceptar boton" id="btn-aceptar3">
+                <button class="btn-aceptar boton" id="btn-aceptar-venta">
                     Aceptar
                 </button>
-                <button class="btn-cancelar boton" id="btn-cancelar1">
+                <button class="btn-cancelar boton" id="btn-cancelar-venta">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="fondo oculto" id="popup-seleccion">
+        <div class="div-mensaje div-mensaje-cantidad" id="div-mensaje-seleccion">
+            <p class="mensaje-popup" id="mensaje-popup-seleccion">Selecciona el jugador al que quieres vender la propiedad
+            </p>
+            <div class="botones-popup" id="botones-jugadores">
+
+            </div>
+            <div class="botones-popup">
+                <button class="btn-aceptar boton" id="btn-aceptar-seleccion">
+                    Aceptar
+                </button>
+                <button class="btn-cancelar boton" id="btn-cancelar-seleccion">
                     Cancelar
                 </button>
             </div>
