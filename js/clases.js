@@ -301,7 +301,7 @@ class SalaComun extends Comprable{
 /* CASILLA COMPAÑIA */
 class Compania extends Comprable{
     constructor(id, nombre) {
-        super(id, nombre, 150, "compania", "Si se posee UNA carta de Sortilegios Weasley o Honeydukes el alquiler es 4 veces el número salido en los dados." + "<br>" +
+        super(id, nombre, 150, "compania", "Si se posee UNA carta de Sortilegios Weasley o Honeydukes el alquiler es 4 veces el número salido en los dados." + "<br><br>" +
             "Si se poseen DOS cartas de Sortilegios Weasley o Honeydukes el alquiler es 10 veces el número salido en los dados.");
         this.tarifa;
     }

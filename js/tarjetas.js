@@ -193,6 +193,7 @@ async function randomTarjeta(tipo){
         await popUp(tarjeta.texto);
         for (const jugador of jugadoresEnPie) {
             if(jugador!==turno){
+                /*123*/
                 await asyncPagar(jugador.nombre + " debes pagar 10 Galeones a " + turno.nombre,
                     "No puedes permitirte pagar el regalo, has perdido" ,10, jugador, turno);
             }

@@ -110,6 +110,13 @@ async function popUpSeleccion(){
 
     function seleccionarJugador(){
         let id = this.id;
+        jugadoresEnPie.forEach(jugador=>{
+            if(jugador!==turno){
+                const btnJugador = document.getElementById("btn-jugador" + jugador.id);
+                btnJugador.classList.remove("seleccionado");
+            }
+        });
+        this.classList.add("seleccionado");
         let numJugador = parseInt(id.substr(11));
         comprador = jugadoresEnPie[numJugador - 1];
 

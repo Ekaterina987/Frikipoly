@@ -711,7 +711,7 @@ function onMouseOverInfo(col){
 
             }else{
                 /* SI LA CASILLA ES DE TIPO COMPAÑÍA SE MODIFICA LA APARIENCIA Y SE AÑADE LA INFORMACIÓN ADICIONAL */
-                info.appendChild(document.createTextNode(casilla.info));
+                info.innerHTML = casilla.info;
                 divi[0].classList.add("oculto");
                 divi[1].classList.add("oculto");
                 divi[2].classList.remove("oculto");

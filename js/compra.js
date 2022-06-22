@@ -1,15 +1,15 @@
 /* FUNCIÓN QUE SE EJECUTA AL COMPRAR UNA PROPIEDAD */
-function comprar(){
+async function comprar(){
     /* CONFIRMA LA COMPRA DE LA CASILLA */
     async function asyncConfirmacion() {
         try {
             await popUpConfirm("¿Quieres comprar " + casiFinal.nombre + "?");
-            compPropiedad();
+            await compPropiedad();
         } catch (error) {
         }
     }
-    asyncConfirmacion();
-    function compPropiedad(){
+    await asyncConfirmacion();
+    async function compPropiedad(){
         /* SE COMPRA LA PROPIEDAD, ESTA SE AÑADE A LAS PROPIEDADES DEL JUGADOR, Y SE ACTUALIZAN LOS GRUPOS DE PROPIEDADES
         * PARA ESTABLECER QUÉ JUGADORES POSEEN UN GRUPO COMPLETO */
         casiFinal.comprar(turno);
@@ -29,8 +29,9 @@ function comprar(){
 
         /* SE MUESTRA UN MENSAJE INFORMATIVO */
         const mensaje = document.getElementById("mensaje");
+        ocultar(mensaje);
         mensaje.innerHTML= turno.nombre + " ha comprado la casilla " + casiFinal.nombre;
-        mensaje.classList.remove("transparente");
+        mostrar(mensaje);
         /* SE DESHABILITA LA OPCIÓN DE COMPRAR LA CASILLA */
         btnComprar.removeEventListener("click", comprar);
         /* SE DESHABILITA LA OPCIÓN DE COMPRAR UNA CASA EN OTRA CASILLA */
@@ -77,7 +78,7 @@ function habilitarComp(propiedad, jugador){
     }
 }
 /* FUNCIÓN QUE SE EJECUTA AL PULSAR EL BOTÓN COMPRAR CASA */
-function comprarCasa(){
+async function comprarCasa(){
     var texto = "";
     /* COMPRUEBA SI ES UNA CASA O UN HOTEL */
     if(casi.casas<4){
@@ -89,17 +90,18 @@ function comprarCasa(){
     async function asyncCasa() {
         try {
             await popUpConfirm(texto);
-            compCasa();
+            await compCasa();
         } catch (error) {
         }
     }
-    asyncCasa();
+    await asyncCasa();
     /* COMPRA DE LA CASA */
-    function compCasa(){
+    async function compCasa(){
         /* SE RESTA EL PRECIO DE LA CASA AL JUGADOR */
         turno.dinero -= casi.precioCasa;
         /* SE MUESTRA UN MENSAJE INFORMATIVO DEPENDIENDO DE SI ES CASA U HOTEL Y SE MUESTRAN LOS ICONOS DE CASAS Y/O HOTELES */
         const mensaje = document.getElementById("mensaje");
+        await ocultar(mensaje);
         if(casi.casas<4){
             casi.casas++;
             mensaje.innerHTML = turno.nombre + " ha comprado una casa en " + casi.nombre;
@@ -112,7 +114,7 @@ function comprarCasa(){
             mostrarHotel("div-" + casi.id + "-" + idHot);
             ocultarCasas("div-" + casi.id);
         }
-        mensaje.classList.remove("transparente");
+        mostrar(mensaje);
 
         /* SE ACTUALIZA EL DINERO DEL JUGADOR POR PANTALLA */
         actualizarDinero(turno);

@@ -59,7 +59,11 @@ async function venderProp(){
         await popUpConfirm("¿Quieres vender " + casi.nombre +  "?");
         try{
             await popUpSeleccion();
-            selJugador();
+            try{
+                await selCantidad();
+            }catch (e){
+
+            }
         }catch (e){
 
         }
@@ -67,19 +71,6 @@ async function venderProp(){
     }catch (e){
 
     }
-}
-async function selJugador(){
-    try {
-        await popUpConfirm("¿Quieres vender " + casi.nombre + " a " + comprador.nombre + "?");
-        try{
-            await selCantidad();
-        }catch (e){
-
-        }
-
-    }catch (e){
-    }
-
 }
 async function selCantidad(){
     let cantidad;
@@ -89,7 +80,7 @@ async function selCantidad(){
         /*123*/
         cantidad = parseInt(inputCantidad.value);
         try{
-            await popUpConfirm("¿" + comprador.nombre + " quieres comprar " + casi.nombre + " por " + cantidad + "galeones?");
+            await popUpConfirm("¿" + comprador.nombre + " quieres comprar " + casi.nombre + " por " + cantidad + " Galeones?");
             comprador.dinero-=cantidad;
             actualizarDinero(comprador);
             turno.dinero+=cantidad;
@@ -107,6 +98,20 @@ async function selCantidad(){
 
             casi.grupo.getPropietario();
 
+            const casiTablero = document.getElementById(casi.id);
+
+            casiTablero.classList.remove("casillaJugador" + turno.id);
+            casiTablero.classList.remove("seleccionado");
+            casiTablero.classList.remove("pinchable");
+            casiTablero.classList.add("casillaJugador" + comprador.id);
+
+            const mensaje = document.getElementById("mensaje");
+
+            await ocultar(mensaje);
+            mensaje.innerHTML = turno.nombre + " ha vendido " + casi.nombre + " a " + comprador.nombre;
+            mostrar(mensaje);
+
+
             console.log(casi.propietario);
             console.log(casi.grupo.propietario);
 
@@ -116,6 +121,17 @@ async function selCantidad(){
     }catch (e){
 
     }
+}
+function ocultar(elemento) {
+    return new Promise((resolve) => {
+        elemento.classList.add("transparente");
+        setTimeout(function(){
+            resolve();
+        }, 1000);
+    });
+}
+function mostrar(elemento) {
+    elemento.classList.remove("transparente");
 }
 /* SE HABILITA EL BOTÓN PARA VENDER CASAS O PROPIEDADES */
 function habilitar(propiedad, jugador){
@@ -142,18 +158,18 @@ function habilitar(propiedad, jugador){
         }
 }
 /* FUNCIÓN PARA VENDER UNA CASILLA */
-function ventaCasilla(){
+async function ventaCasilla(){
     /* SE PIDE CONFIRMACIÓN DE LA VENTA DE LA CASILLA */
     async function asyncVenta() {
         try {
             await popUpConfirm("¿Quieres vender " + casi.nombre + " por " + (casi.precio/2) +  " Galeones?");
-            venderPropiedad();
+            await venderPropiedad();
         } catch (error) {
         }
     }
-    asyncVenta();
+    await asyncVenta();
     /* FUNCIÓN QUE VENDE LA PROPIEDAD */
-    function venderPropiedad(){
+    async function venderPropiedad(){
         /* SE QUITA EL PROPIETARIO A LA CASILLA */
         casi.propietario = null;
         /* SE COMRPUEBA SI SE HA SALDADO LA DEUDA */
@@ -202,8 +218,9 @@ function ventaCasilla(){
 
         /* MENSAJE INFORMATIVO SOBRE LA VENTA*/
         let mensaje = document.getElementById("mensaje");
+        await ocultar(mensaje);
         mensaje.innerHTML = turno.nombre + " ha vendido " + casi.nombre;
-        mensaje.classList.remove("transparente");
+        mostrar(mensaje);
 
         casi = null;
         /* SE ACTUALIZA POR PANTALLA EL DINERO DE LOS JUGADORES Y LA DEUDA */
@@ -215,7 +232,7 @@ function ventaCasilla(){
     }
 }
 /* FUNCIÓN PARA VENDER CASAS U HOTELES */
-function ventaCasa(){
+async function ventaCasa(){
     let texto = "";
     /* SEGÚN SEA CASA U HOTEL SE MOSTRARÁ UN MENSAJE CONCRETO */
     if(casi.hoteles===0){
@@ -227,13 +244,13 @@ function ventaCasa(){
     async function asyncVentaCasa() {
         try {
             await popUpConfirm(texto);
-            venderCasa();
+            await venderCasa();
         } catch (error) {
         }
     }
-    asyncVentaCasa();
+    await asyncVentaCasa();
     /* VENTA DE LA CASA/HOTEL */
-    function venderCasa(){
+    async function venderCasa(){
         /* SE GUARDA EN UNA VARIABLE SI SE HA FINALIZADO LA VENTA */
         let finVenta = false;
         /* SE COMPRUEBA SI SE HA SALDADO LA DEUDA */
@@ -301,12 +318,13 @@ function ventaCasa(){
         }
         /* MENSAJE INFORMATIVO SOBRE LA VENTA DE LA CASA/HOTEL */
         let mensaje = document.getElementById("mensaje");
+        await ocultar(mensaje);
         if(casa){
             mensaje.innerHTML = turno.nombre + " ha vendido una casa en " + casi.nombre;
         }else{
             mensaje.innerHTML = turno.nombre + " ha vendido un hotel en " + casi.nombre;
         }
-        mensaje.classList.remove("transparente");
+        mostrar(mensaje);
         casi = null;
         /* SE ACTUALIZA EL DINERO DE LOS JUGADORES Y LA DEUDA POR PANTALLA */
         if(propietario!=null) {

@@ -893,7 +893,7 @@ button.seleccionado{
     background-color: rgba(34, 35, 106, 0.5);
     box-shadow: 0px 0px 5px 5px rgba(34, 35, 106, 1);
 }
-.seleccionado{
+div.seleccionado{
     background-color: rgba(58, 19, 11, 0.5);
     box-shadow: 0px 0px 3px 3px rgba(58, 19, 11, 1);
 }
