@@ -1,6 +1,6 @@
 /* ANIMACIONES FICHA */
 /* Cambia el valor de la velocidad */
-var velocidad = 4;
+var velocidad = 3;
 function animacionFichaArriba(ficha,tirada, posx, posy) {
     var start = null;
     var distancia = (parseInt(ladoTablero.slice(0,ladoTablero.length - 2)) /12) * tirada;

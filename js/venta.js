@@ -47,7 +47,7 @@ async function habilitarClickVentaJugador(){
         }else{
            casPropiedad.addEventListener("click", venderProp);
            casPropiedad.classList.add("pinchable");
-            casPropiedad.classList.add("seleccionable");
+           casPropiedad.classList.add("seleccionable");
         }
     })
 }
@@ -59,18 +59,29 @@ async function venderProp(){
         await popUpConfirm("¿Quieres vender " + casi.nombre +  "?");
         try{
             await popUpSeleccion();
-            try{
-                await selCantidad();
-            }catch (e){
-
-            }
+            await selCantidad();
         }catch (e){
-
+            cancelarVenta();
         }
 
     }catch (e){
-
+        cancelarVenta();
     }
+}
+function cancelarVenta(){
+    turno.propiedades.forEach(propiedad=>{
+        const casPropiedad = document.getElementById(propiedad.id);
+        casPropiedad.classList.remove("pinchable");
+        casPropiedad.classList.remove("seleccionable");
+        casPropiedad.classList.remove("seleccionado");
+        casPropiedad.removeEventListener("click", venderProp);
+    });
+    /* SE HABILITA LA OPCIÓN DE COMPRAR CASAS EN OTRAS CASILLAS SI SE PUEDE */
+    turno.gruposCasillas.forEach(grupo=>{
+        grupo.casillas.forEach(cas=>{
+            habilitarComp(cas, turno);
+        })
+    });
 }
 async function selCantidad(){
     let cantidad;
@@ -116,10 +127,10 @@ async function selCantidad(){
             console.log(casi.grupo.propietario);
 
         }catch (e){
-
+            cancelarVenta();
         }
     }catch (e){
-
+        cancelarVenta();
     }
 }
 function ocultar(elemento) {

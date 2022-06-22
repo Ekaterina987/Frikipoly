@@ -96,6 +96,7 @@ async function popUpSeleccion(){
     const btnCancelar = document.getElementById("btn-cancelar-seleccion");
 
     const divJugadores = document.getElementById("botones-jugadores");
+    divJugadores.innerHTML = "";
 
     jugadoresEnPie.forEach(jugador=>{
         if(jugador!==turno){
