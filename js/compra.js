@@ -4,12 +4,12 @@ async function comprar(){
     async function asyncConfirmacion() {
         try {
             await popUpConfirm("¿Quieres comprar " + casiFinal.nombre + "?");
-            await compPropiedad();
+            compPropiedad();
         } catch (error) {
         }
     }
     await asyncConfirmacion();
-    async function compPropiedad(){
+    function compPropiedad(){
         /* SE COMPRA LA PROPIEDAD, ESTA SE AÑADE A LAS PROPIEDADES DEL JUGADOR, Y SE ACTUALIZAN LOS GRUPOS DE PROPIEDADES
         * PARA ESTABLECER QUÉ JUGADORES POSEEN UN GRUPO COMPLETO */
         casiFinal.comprar(turno);
@@ -35,24 +35,45 @@ async function comprar(){
         /* SE DESHABILITA LA OPCIÓN DE COMPRAR LA CASILLA */
         btnComprar.removeEventListener("click", comprar);
         /* SE DESHABILITA LA OPCIÓN DE COMPRAR UNA CASA EN OTRA CASILLA */
-        const btnCompCasas = document.getElementById("btnComprarCasas" + turno.id);
+        /*const btnCompCasas = document.getElementById("btnComprarCasas" + turno.id);
         btnCompCasas.removeEventListener("click",comprarCasa);
-        btnCompCasas.disabled = true;
+        btnCompCasas.disabled = true;*/
         /* SE HABILITA LA OPCIÓN DE COMPRAR CASAS EN OTRAS CASILLAS SI SE PUEDE */
-        turno.gruposCasillas.forEach(grupo=>{
+        /*turno.gruposCasillas.forEach(grupo=>{
             grupo.casillas.forEach(cas=>{
                 habilitarComp(cas, turno);
             })
-        });
-        habilitarVentaPropiedadAJugador();
+        });*/
+        //habilitarVentaPropiedadAJugador();
+        accionesTurno();
 
     }
+}
+async function modoVentaCasas() {
+    const btnCompCasas = document.getElementById("btnComprarCasas");
+    const btnVentaJug = document.getElementById("btnVentaJug");
+    if(turno.gruposCasillas.length>0 && turno.deuda===0){
+        turno.gruposCasillas.forEach(grupo=>{
+            grupo.casillas.forEach(cas=>{
+                const casillaHtml = document.getElementById(cas.id);
+                if(cas.casas === turno.calcularMenorCasas(grupo) && turno.dinero>=cas.precioCasa&& cas.hoteles===0){
+                    casillaHtml.classList.add("pinchable");
+                    casillaHtml.classList.add("seleccionable");
+                    casillaHtml.addEventListener("click", habilitarCompCasas);
+                }
+            })
+        })
+    }
+    btnVentaJug.classList.add("mover-izquierda");
+    btnVentaJug.classList.add("transparente");
+    btnCompCasas.classList.add("mover-izquierda");
+    btnCompCasas.classList.add("invisible");
 }
 /* FUNCIÓN QUE HABILITA EL BOTÓN DE COMPRAR CASAS Y HOTELES */
 function habilitarCompCasas(){
     casi = tablero[this.id - 1];
     /* SE ELIMINAN LOS EVENT LISTENERS DEL BOTÓN DE COMPRAR CASAS ANTES DE PROCEDER */
-    const btnCompCasas = document.getElementById("btnComprarCasas" + turno.id);
+    const btnCompCasas = document.getElementById("btnComprarCasas");
     btnCompCasas.removeEventListener("click", comprarCasa);
     /* SI CUMPLE LOS REQUISITOS PARA COMPRAR UNA CASA O UN HOTEL SE AÑADEN LOS EVENTOS CORRESPONDIENTES */
     if (turno.dinero>casi.precioCasa && casi.hoteles===0 && turno.calcularMenorCasas(casi.grupo) === (casi.casas + casi.hoteles)){

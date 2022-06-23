@@ -1,19 +1,42 @@
-/* Pon un número entre 700 y 2000  para cambiar el tamaño del tablero */
 *{
     --lado_tablero:900px;
-}
-/* Cambia los valores a números entre 0 y 255  para cambiar el color de fondo */
-*{
-    --color_fondo:rgb(75, 6, 18);
-}
-
-*{
     --lado_celda: calc(var(--lado_tablero) / 12);
     --lado_celda_largo: calc(var(--lado_celda) * 1.5);
     --fuente_tablero: 0.555em;
     --ficha_size: 1.8rem;
     --barra_corto: calc(var(--lado_celda) / 5);
     --contenedor_fichas: calc(var(--lado_celda) / 1.1);
+    --burdeos-oscuro: rgb(62, 0, 4);
+    --burdeos: rgb(75, 6, 18);
+    --marron: rgb(112, 13, 31);
+    --rojo: rgb(160, 26, 36);
+    --rojo-claro: rgb(231, 34, 49);
+    --rojo-pastel: rgb(255, 57, 70);
+    --rosita: rgb(221, 166, 201);
+    --arena: rgb(144, 117, 119);
+    --pergamino: rgb(246, 214, 182);
+    --amarillo-sucio: rgb(161, 153, 127);
+    --amarillo: rgb(255, 174, 14);
+    --amarillo-claro: rgb(248, 197, 95);
+    --naranja: rgb(234, 84, 26);
+    --verde-pastel: rgb(107, 198, 120);
+    --verde-claro: rgb(28, 135, 61);
+    --verde: rgb(28, 104, 53);
+    --verde-oscuro: rgb(16, 71, 29);
+    --deshabilitado: rgb(137, 137, 151);
+    --azul-oscuro: rgb(34, 35, 106);
+    --azul-oceano: rgb(1, 59, 167);
+    --azul: rgb(39, 114, 187);
+    --azul-cielo: rgb(156, 205, 238);
+    --negro: rgb(26, 23, 16);
+    --negro-translucido: rgba(26, 23, 16, 0.4);
+    --blanco: rgb(255, 244, 209);
+
+    /*secundarios fichas */
+    --ficha1: rgb(255, 197, 150);
+    --ficha2: rgb(26, 23, 16);
+    --ficha3: rgb(241, 231, 222);
+    --ficha4: rgb(238, 207, 83);
 }
 @font-face {
     font-family: "Animales Fantastic";
@@ -26,7 +49,7 @@
 body{
     margin: 0;
     font-family: 'Libre Baskerville', serif;
-    background-color: var(--color_fondo);
+    background-color: var(--burdeos);
 }
 h3{
     font-size: 1.5em;
@@ -40,8 +63,8 @@ p{
 }
 .boton{
     border: none;
-    background-color: #22236a;
-    color: #f6d6b6;
+    background-color: var(--azul-oscuro);
+    color: var(--pergamino);
     font-family: "Libre Baskerville", serif;
     border-radius: 0.8em;
     padding: 0.5em 2em;
@@ -53,7 +76,7 @@ p{
     height: fit-content;
 }
 .btn-finalizar{
-    background-color: #a01a24;
+    background-color: var(--rojo);
     font-size: 1.125em;
     width: fit-content;
 }
@@ -62,29 +85,29 @@ p{
 }
 .btn-cancelar{
     width: 50%;
-    background-color: #a01a24;
+    background-color: var(--rojo);
 }
 
 .boton:hover:not([disabled]){
     cursor: pointer;
-    background-color: #ffae0e;
-    color: #1a1710;
+    background-color: var(--amarillo);
+    color: var(--negro);
 }
 .boton:disabled{
     cursor: auto;
-    background-color: #898997;
+    background-color: var(--deshabilitado);
 }
 .btn-finalizar:hover:not([disabled]){
-    background-color: #1c6835;
-    color: #f6d6b6;
+    background-color: var(--verde);
+    color: var(--pergamino);
 }
 .btn-finalizar:disabled{
     cursor: auto;
-    background-color: #907577;
+    background-color: var(--arena);
 }
 #btn-cancelar-confirm:hover{
-    background-color: #3e0004;
-    color: #f6d6b6;
+    background-color: var(--burdeos-oscuro);
+    color: var(--pergamino);
 }
 .cont-col{
     width: 33.33333%;
@@ -160,18 +183,18 @@ p{
     width: 6em;
 }
 .svg-dados path{
-    fill: #1a1710;
+    fill: var(--negro);
     transition: fill 0.4s;
 }
 .dados:hover:not([disabled]){
     cursor: pointer;
 }
 .dados:hover path{
-    fill: #a01a24;
+    fill: var(--rojo);
     transition: fill 0.4s;
 }
 .dados:disabled path{
-    fill: #a1997f;
+    fill: var(--amarillo-sucio);
     cursor: auto;
 }
 .dados{
@@ -190,7 +213,7 @@ p{
 }
 .infoDiv{
     z-index: 9;
-    background-color: #f6d6b6;
+    background-color: var(--pergamino);
     text-align: center;
     font-size: 0.702em;
     width: 20em;
@@ -206,13 +229,13 @@ p{
     justify-content: center;
     font-size: 0.79em;
     padding-bottom: 1.7em;
-    color: #a01a24;
+    color: var(--rojo);
     font-weight: bold;
     background: url("images/banner.png") no-repeat center;
     background-size: contain;
 }
 .infoDivCont{
-    border: 1px solid #1a1710;
+    border: 1px solid var(--negro);
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -234,19 +257,19 @@ h4{
     height: 1px;
     width: 80%;
     margin: 0.5em auto;
-    background-color: #1a1710;
+    background-color: var(--negro);
 }
 #tnombre1{
-    color: #9CCDEE;
+    color: var(--azul-cielo);
 }
 #tnombre2{
-    color: #ECA400;
+    color: var(--amarillo);
 }
 #tnombre3{
-    color: #1c873d;
+    color: var(--verde-claro);
 }
 #tnombre4{
-    color: #B20917;
+    color: var(--rojo-claro);
 }
 #contenedor{
     height: 100%;
@@ -289,14 +312,14 @@ h4{
     margin-left: auto;
     margin-right: auto;
     align-self: center;
-    border: 2px solid #1a1710;
+    border: 2px solid var(--negro);
     background-image: url("images/tablero1.png");
     background-size: cover;
     background-position: center;
 }
 .celdaTablero{
     box-sizing: border-box;
-    border: 1px solid #1a1710;
+    border: 1px solid var(--negro);
     font-size: var(--fuente_tablero);
     display: flex;
 }
@@ -335,14 +358,14 @@ h4{
 .internas{
 
     width: calc(var(--lado_celda) * 9);
-    border-left: 2px solid #1a1710;
-    border-right: 2px solid #1a1710;
+    border-left: 2px solid var(--negro);
+    border-right: 2px solid var(--negro);
 }
 .internas-arriba{
-    border-top: 2px solid #1a1710;
+    border-top: 2px solid var(--negro);
 }
 .internas-abajo{
-    border-bottom: 2px solid #1a1710;
+    border-bottom: 2px solid var(--negro);
 }
 .col-1{
     flex-grow: 1;
@@ -367,7 +390,7 @@ h4{
     height: var(--ficha_size);
     width: var(--ficha_size);
     border-radius: var(--ficha_size);
-    box-shadow: 5px 5px 0 #1a1710;
+    box-shadow: 5px 5px 0 var(--negro);
 }
 .rowFichas{
     display: flex;
@@ -378,32 +401,32 @@ h4{
 }
 
 .ficha1{
-    background-color: #2772bb;
+    background-color: var(--azul);
 }
 .ficha2{
-    background-color: #ffae0e;
+    background-color: var(--amarillo);
 }
 .ficha3{
-    background-color: #1c6835;
+    background-color: var(--verde);
 }
 .ficha4{
-    background-color: #a01a24;
+    background-color: var(--rojo);
 }
 
 .casillaJugador1{
-    border: 3px solid #2772bb;
+    border: 3px solid var(--azul);
 }
 .casillaJugador2{
-    border: 3px solid #ffae0e;
+    border: 3px solid var(--amarillo);
 }
 .casillaJugador3{
-    border: 3px solid #1c6835;
+    border: 3px solid var(--verde);
 }
 .casillaJugador4{
-    border: 3px solid #a01a24;
+    border: 3px solid var(--rojo);
 }
 .galeones{
-    color: #f6d6b6;
+    color: var(--pergamino);
 }
 .divColor{
     height: var(--barra_corto);
@@ -437,42 +460,42 @@ h4{
     margin-right: auto;
 }
 .marron{
-    background-color: #700D1F;
-    color: #f6d6b6;
+    background-color: var(--marron);
+    color: var(--pergamino);
 }
 .azul-cielo{
-    background-color: #9CCDEE;
-    color: #1a1710;
+    background-color: var(--azul-cielo);
+    color: var(--negro);
 }
 .fucsia{
-    background-color: #DDA6C9;
-    color: #1a1710;
+    background-color: var(--rosita);
+    color: var(--negro);
 }
 .naranja{
-    background-color: #ea541a;
-    color: #1a1710;
+    background-color: var(--naranja);
+    color: var(--negro);
 }
 .rojo{
-    background-color: #B20917;
-    color: #f6d6b6;
+    background-color: var(--rojo-claro);
+    color: var(--pergamino);
 }
 .amarillo{
-    background-color: #ECA400;
-    color: #1a1710;
+    background-color: var(--amarillo-claro);
+    color: var(--negro);
 }
 .verde{
-    background-color: #10471D;
-    color: #f6d6b6;
+    background-color: var(--verde-oscuro);
+    color: var(--pergamino);
 }
 .azul-oceano{
-    background-color: #013BA7;
-    color: #f6d6b6;
+    background-color: var(--azul-oceano);
+    color: var(--pergamino);
 }
 .casita g{
-    fill: #3eac56;
+    fill: var(--verde-pastel);
 }
 .hotel g{
-    fill: #ff3946;
+    fill: var(--rojo-pastel);
 }
 .svg-casa{
     width: 15px;
@@ -487,7 +510,7 @@ h4{
 }
 .fondo{
     z-index: 99;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: var(--negro-translucido);
     width: 100%;
     height: 100%;
     position: fixed;
@@ -495,7 +518,7 @@ h4{
     align-items: center;
 }
 .div-mensaje{
-    background-color: #efdbcb;
+    background-color: var(--pergamino);
     width: 300px;
     height: 200px;
     padding: 2em;
@@ -530,7 +553,7 @@ h4{
     background-color: rgba(0,0,0,0.4);
 }
 .div-ganar{
-    background-color: #f6d6b6;
+    background-color: var(--pergamino);
     width: 36em;
     height: 24em;
     display: flex;
@@ -544,7 +567,7 @@ h4{
 }
 .puntuaciones{
     font-size: 1.802em;
-    color: #a01a24;
+    color: var(--rojo);
 }
 .div-puntuacion{
     display: flex;
@@ -580,16 +603,16 @@ h4{
     background-size: 70%;
 }
 .ficha1 path{
-    fill: #ffc596;
+    fill: var(--ficha1);
 }
 .ficha2 path{
-    fill: #1a1710;
+    fill: var(--ficha2);
 }
 .ficha3 path{
-    fill: #f1e7de;
+    fill: var(--ficha3);
 }
 .ficha4 path{
-    fill: #eecf53;
+    fill: var(--ficha4);
 }
 .subrayado{
     display: inline-block;
@@ -616,16 +639,16 @@ h4{
 
 }
 #tnombre1:after{
-    background-color: #9CCDEE;
+    background-color: var(--azul-cielo);
 }
 #tnombre2:after{
-    background-color: #ECA400;
+    background-color: var(--amarillo);
 }
 #tnombre3:after{
-    background-color: #1c873d;
+    background-color: var(--verde-claro);
 }
 #tnombre4:after{
-    background-color: #B20917;
+    background-color: var(--rojo-claro);
 }
 .subrayado-after:after {
     transform: scaleX(1);
@@ -642,11 +665,11 @@ h4{
 .cont-azkaban{
     margin-left: -0.4rem;
     margin-bottom: -0.4rem;
-    background-color: #a01a24;
-    border-top: 3px solid #1a1710;
-    border-left: 1px solid #1a1710;
-    border-right: 3px solid #1a1710;
-    border-bottom: 1px solid #1a1710;
+    background-color: var(--rojo);
+    border-top: 3px solid var(--negro);
+    border-left: 1px solid var(--negro);
+    border-right: 3px solid var(--negro);
+    border-bottom: 1px solid var(--negro);
     box-sizing: border-box;
     flex-grow: 1;
     width: 85%;
@@ -738,12 +761,12 @@ h4{
     width: 7em;
     border-radius: 0.3em;
     font-size: 0.79rem;
-    border: 1px solid #f6d6b6;
-    color: #f6d6b6;
+    border: 1px solid var(--pergamino);
+    color: var(--pergamino);
     padding: 0.3em;
 }
 .div-tarjeta {
-    background-color: #1a1710;
+    background-color: var(--negro);
     margin-left: auto;
     margin-right: auto;
     width: 70%;
@@ -752,7 +775,7 @@ h4{
 
 }
 .div-tarjeta-invisibilidad {
-    background-color: #f6d6b6;
+    background-color: var(--pergamino);
 }
 .cont-texto-tarjeta{
     text-align: center;
@@ -766,7 +789,7 @@ h4{
     font-size: 0.79rem;
 }
 .div-interno-tarjeta{
-    border: 1px solid #1a1710;
+    border: 1px solid var(--negro);
     width: calc(100% - 2px);
     height: calc(100% - 2px);
     display: flex;
@@ -774,14 +797,14 @@ h4{
     justify-content: center;
 }
 .tarjeta-invisibilidad .div-interno-tarjeta{
-    border: 1px solid #f6d6b6;
+    border: 1px solid var(--pergamino);
 }
 #div-tiempo{
     z-index: 9;
     position: absolute;
     width: 100%;
     text-align: center;
-    color: #f6d6b6;
+    color: var(--pergamino);
     font-size: 1.5em;
 }
 
@@ -806,49 +829,49 @@ h4{
     gap: 1em;
 }
 .btn-normal{
-    background-color: #a01a24;
+    background-color: var(--rojo);
     width: 12em;
     font-size: 1.602em;
-    color: #fff4d1;
+    color: var(--blanco);
 }
 .btn-normal:hover:not([disabled]){
     opacity: 0.6;
-    background-color: #a01a24;
-    color: #fff4d1;
+    background-color: var(--rojo);
+    color: var(--blanco);
 
 }
 .btn-normal:disabled{
     cursor: auto;
-    background-color: #907577;
+    background-color: var(--arena);
 }
 .btn-contra{
     width: 12em;
     font-size: 1.602em;
-    background-color: #a01a24;
-    color: #fff4d1;
+    background-color: var(--rojo);
+    color: var(--blanco);
 }
 .btn-contra:hover:not([disabled]){
     opacity: 0.6;
-    background-color: #a01a24;
-    color: #fff4d1;
+    background-color: var(--rojo);
+    color: var(--blanco);
 }
 .btn-contra:disabled{
     cursor: auto;
-    background-color: #907577;
+    background-color: var(--arena);
 }
 button.seleccionado{
-    background-color: #3A130B;
+    background-color: var(--burdeos-oscuro);
 }
 .btn-seleccionar{
     margin-top: 3em;
     width: 8em;
     font-size: 1.266em;
-    color: #fff4d1;
+    color: var(--blanco);
 }
 .btn-seleccionar:hover:not([disabled]){
-    background-color: #22236a;
+    background-color: var(--azul-oscuro);
     opacity: 0.6;
-    color: #fff4d1;
+    color: var(--blanco);
 }
 #tiempo{
     font-size: 1.602em;
@@ -871,41 +894,66 @@ button.seleccionado{
 
 }
 #btn-volumen:hover .icono-volumen{
-    color: #9CCDEE;
+    color: var(--azul-cielo);
     cursor: pointer;
 }
 #btn-volumen .icono-volumen{
-    color: #f6d6b6;
+    color: var(--pergamino);
     font-size: 2em;
 }
 .invisible{
     visibility: hidden;
 }
 
-.oculto{
-    display: none;
-}
+
 .seleccionable{
     background-color: rgba(160, 26, 36, 0.5);
-    box-shadow: 0px 0px 3px 3px rgba(160, 26, 36, 1);
+    box-shadow: 0px 0px 3px 3px var(--rojo);
 }
 .seleccionable:hover{
     background-color: rgba(34, 35, 106, 0.5);
-    box-shadow: 0px 0px 5px 5px rgba(34, 35, 106, 1);
+    box-shadow: 0px 0px 5px 5px var(--azul-oscuro);
 }
 div.seleccionado{
     background-color: rgba(58, 19, 11, 0.5);
-    box-shadow: 0px 0px 3px 3px rgba(58, 19, 11, 1);
+    box-shadow: 0px 0px 3px 3px var(--burdeos-oscuro);
 }
-div.modos{
+.acciones{
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: var(--burdeos-oscuro);
     z-index: 9;
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    gap: 1em;
 }
 div.col-tablero{
     z-index: 99;
+}
+.botones-acciones{
+    z-index: 999;
+    width: 18em;
+    margin: 0;
+    transition: transform 1s , opacity 1s;
+    background-color: var(--rojo);
+}
+
+.oculto{
+    display: none;
+}
+.mover-izquierda{
+    transform: translateX(-100px);
+}
+.boton-flecha{
+    background-color: transparent;
+    width: fit-content;
+    border: none;
+}
+.flecha{
+    color: var(--pergamino);
+    font-size: 2em;
 }

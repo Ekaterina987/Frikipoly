@@ -150,17 +150,8 @@ async function turnoJugador(){
 function turnoComprar(){
     /* ACCIONES PERMITIDAS EN EL TURNO */
     /* COMPRAR CASAS U HOTELES */
-    if(turno.gruposCasillas.length>0 && turno.deuda===0){
-        turno.gruposCasillas.forEach(grupo=>{
-            grupo.casillas.forEach(cas=>{
-                const casillaHtml = document.getElementById(cas.id);
-                if(cas.casas === turno.calcularMenorCasas(grupo) && turno.dinero>=cas.precioCasa&& cas.hoteles===0){
-                    casillaHtml.classList.add("pinchable");
-                    casillaHtml.addEventListener("click", habilitarCompCasas);
-                }
-            })
-        })
-    }
+    const btnCompCasas = document.getElementById("btnComprarCasas");
+    btnCompCasas.disabled = false;
 }
 /* VARIABLE EN LA QUE SE GUARDA EL OBJETO CASILLA EN EL QUE SE DESEA REALIZAR ACCIONES */
 var casi;
@@ -246,12 +237,18 @@ async function jugadorJuego(inicial, final){
             await randomTarjeta("hechizos");
         }
         if(!finPartida){
-            turnoComprar();
-            habilitarVentaPropiedadAJugador();
+            /*turnoComprar();
+            habilitarVentaPropiedadAJugador();*/
+            accionesTurno();
         }
     }
 }
-
+function accionesTurno() {
+    const btnAccion = document.getElementById("btnAcciones" + turno.id);
+    if(turno.propiedades.length !== 0){
+        btnAccion.disabled = false;
+    }
+}
 /* SE CREA UNA PROMESA QUE SE EJECUTARÁ CUANDO SE MUEVA LA CASILLA A LA POSICIÓN 10 (AZKABÁN) */
 var promesaAzkaban = function(ficha, casilla)
 {
@@ -522,9 +519,9 @@ async function finalizar(){
     propietario = null;
 
     /* SE DESHABILITA EL BOTÓN DE COMPRAR CASAS */
-    const btnCompCasas = document.getElementById("btnComprarCasas" + turno.id);
+    /*const btnCompCasas = document.getElementById("btnComprarCasas" + turno.id);
     btnCompCasas.disabled = true;
-    btnCompCasas.removeEventListener("click",comprarCasa);
+    btnCompCasas.removeEventListener("click",comprarCasa);*/
 
     /* SE DESHABILITA LA POSIBILIDAD DE PINCHAR EN LAS CASILLAS */
     turno.gruposCasillas.forEach(grupo=>{
@@ -541,8 +538,8 @@ async function finalizar(){
 
     let indiceTurno = jugadoresEnPie.indexOf(turno) + 1;
 
-    const btnVenta = document.getElementById("btnVentaJug" + turno.id);
-    btnVenta.disabled = true;
+    /*const btnVenta = document.getElementById("btnVentaJug" + turno.id);
+    btnVenta.disabled = true;*/
     /* SE ESTABLECE EL TURNO AL SIGUIENTE JUGADOR */
     turno = jugadoresEnPie[indiceTurno % jugadoresEnPie.length];
     /* SE MUESTRA LA ANIMACIÓN DEL SUBRAYADO DEL JUGADOR */
@@ -600,6 +597,13 @@ async function start(){
 
     for (let k = 0; k < arrJugs.length; k++){
         let jug = new Jugador(k+1,arrJugs[k]);
+        if(k===0){
+            jug.propiedades.push(p2);
+            jug.propiedades.push(p4);
+            p2.propietario = jug;
+            p4.propietario = jug;
+            p2.grupo.getPropietario();
+        }
 
         jugadores.push(jug);
         jugadoresEnPie.push(jug);
@@ -609,18 +613,40 @@ async function start(){
     /* SE GENERA EL TABLERO */
     genera_tablero(jugadores.length);
 
+    const casilla1 = document.getElementById(p2.id);
+    casilla1.classList.add("casillaJugador1");
+    const casilla2 = document.getElementById(p4.id);
+    casilla2.classList.add("casillaJugador1");
+
     /* SE ESTABLECE EL PRIMER TURNO PARA EL PRIMER JUGADOR */
     turno = jugadores[0];
-
     jugadores.forEach(jugador=>{
-        const btnVenta = document.getElementById("btnVentaJug" + jugador.id);
-        btnVenta.addEventListener("click", habilitarClickVentaJugador);
+        const btnAccion = document.getElementById("btnAcciones" + jugador.id);
+        btnAccion.addEventListener("click", modoAcciones);
     });
+    const btnCompCas = document.getElementById("btnComprarCasas");
+    btnCompCas.addEventListener("click", modoVentaCasas);
+    const btnVenta = document.getElementById("btnVentaJug");
+    btnVenta.addEventListener("click", habilitarClickVentaJugador);
+
 
     /* SE ESTABLECE LA POSICIÓN QUE TENDRÁ EL PRIMER PERDEDOR */
     posicionJugador = jugadores.length;
     /* SE MUESTRA LA ANIMACIÓN DEL SUBRAYADO DEL PRIMER JUGADOR*/
     await animIniciar(turno);
+}
+function modoAcciones() {
+    const idBoton = this.id;
+    const id = parseInt(idBoton.slice(11));
+    const acciones = document.getElementById("acciones");
+    acciones.classList.remove("oculto");
+    const btnFin = document.getElementById("btnFinTurno");
+    btnFin.disabled = true;
+
+    turnoComprar();
+    habilitarVentaPropiedadAJugador();
+    /*456*/
+
 }
 /* FUNCION PARA SELECCIONAR MODO DE JUEGO */
 async function getModo(){

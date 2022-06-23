@@ -25,7 +25,7 @@ function habilitarClickCasillas(){
 }
 function habilitarVentaPropiedadAJugador(){
     if(turno.propiedades.length > 0){
-        const btnVenta = document.getElementById("btnVentaJug" + turno.id);
+        const btnVenta = document.getElementById("btnVentaJug");
         btnVenta.disabled = false;
     }
 }
