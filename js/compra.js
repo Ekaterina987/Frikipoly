@@ -49,17 +49,18 @@ async function comprar(){
 
     }
 }
-async function modoVentaCasas() {
+async function modoCompraCasas() {
     const btnCompCasas = document.getElementById("btnComprarCasas");
     const btnVentaJug = document.getElementById("btnVentaJug");
+    const flecha = document.getElementById("btn-flecha");
     if(turno.gruposCasillas.length>0 && turno.deuda===0){
         turno.gruposCasillas.forEach(grupo=>{
             grupo.casillas.forEach(cas=>{
                 const casillaHtml = document.getElementById(cas.id);
-                if(cas.casas === turno.calcularMenorCasas(grupo) && turno.dinero>=cas.precioCasa&& cas.hoteles===0){
+                if(turno.calcularMenorCasas(grupo) !== 5 && turno.calcularMenorCasas(grupo) === (cas.casas + cas.hoteles) && turno.dinero>=cas.precioCasa){
                     casillaHtml.classList.add("pinchable");
                     casillaHtml.classList.add("seleccionable");
-                    casillaHtml.addEventListener("click", habilitarCompCasas);
+                    casillaHtml.addEventListener("click", comprarCasa);
                 }
             })
         })
@@ -68,14 +69,16 @@ async function modoVentaCasas() {
     btnVentaJug.classList.add("transparente");
     btnCompCasas.classList.add("mover-izquierda");
     btnCompCasas.classList.add("invisible");
+    flecha.classList.remove("transparente");
+    flecha.classList.remove("mover-izquierda");
 }
 /* FUNCIÓN QUE HABILITA EL BOTÓN DE COMPRAR CASAS Y HOTELES */
-function habilitarCompCasas(){
+/*function habilitarCompCasas(){
     casi = tablero[this.id - 1];
-    /* SE ELIMINAN LOS EVENT LISTENERS DEL BOTÓN DE COMPRAR CASAS ANTES DE PROCEDER */
+    /!* SE ELIMINAN LOS EVENT LISTENERS DEL BOTÓN DE COMPRAR CASAS ANTES DE PROCEDER *!/
     const btnCompCasas = document.getElementById("btnComprarCasas");
     btnCompCasas.removeEventListener("click", comprarCasa);
-    /* SI CUMPLE LOS REQUISITOS PARA COMPRAR UNA CASA O UN HOTEL SE AÑADEN LOS EVENTOS CORRESPONDIENTES */
+    /!* SI CUMPLE LOS REQUISITOS PARA COMPRAR UNA CASA O UN HOTEL SE AÑADEN LOS EVENTOS CORRESPONDIENTES *!/
     if (turno.dinero>casi.precioCasa && casi.hoteles===0 && turno.calcularMenorCasas(casi.grupo) === (casi.casas + casi.hoteles)){
         btnCompCasas.disabled = false;
         if(casi.casas===4){
@@ -83,23 +86,26 @@ function habilitarCompCasas(){
         }
         btnCompCasas.addEventListener("click",comprarCasa);
     }
-}
+}*/
 /* FUNCIÓN QUE COMPRUEBA LOS REQUISITOS DE LA CASILLA PARA HABILITAR LA COMPRA DE CASAS U HOTELES */
 function habilitarComp(propiedad, jugador){
     if(propiedad.tipo==="propiedad"){
         if(jugador.calcularMenorCasas(propiedad.grupo) !== 5 && jugador.calcularMenorCasas(propiedad.grupo) === (propiedad.casas + propiedad.hoteles) && jugador.dinero>=propiedad.precioCasa){
             const casiHtml = document.getElementById(propiedad.id);
-            casiHtml.addEventListener("click", habilitarCompCasas);
+            casiHtml.addEventListener("click", comprarCasa);
+            casiHtml.classList.add("seleccionable");
             casiHtml.classList.add("pinchable");
         }else{
             const casiHtml = document.getElementById(propiedad.id);
-            casiHtml.removeEventListener("click", habilitarCompCasas);
+            casiHtml.removeEventListener("click", comprarCasa);
+            casiHtml.classList.remove("seleccionable");
             casiHtml.classList.remove("pinchable");
         }
     }
 }
 /* FUNCIÓN QUE SE EJECUTA AL PULSAR EL BOTÓN COMPRAR CASA */
 async function comprarCasa(){
+    casi = tablero[this.id - 1];
     var texto = "";
     /* COMPRUEBA SI ES UNA CASA O UN HOTEL */
     if(casi.casas<4){
@@ -120,9 +126,13 @@ async function comprarCasa(){
     async function compCasa(){
         /* SE RESTA EL PRECIO DE LA CASA AL JUGADOR */
         turno.dinero -= casi.precioCasa;
+
+        /* SE ACTUALIZA EL DINERO DEL JUGADOR POR PANTALLA */
+        actualizarDinero(turno);
+
         /* SE MUESTRA UN MENSAJE INFORMATIVO DEPENDIENDO DE SI ES CASA U HOTEL Y SE MUESTRAN LOS ICONOS DE CASAS Y/O HOTELES */
         const mensaje = document.getElementById("mensaje");
-        await ocultar(mensaje);
+
         if(casi.casas<4){
             casi.casas++;
             mensaje.innerHTML = turno.nombre + " ha comprado una casa en " + casi.nombre;
@@ -135,23 +145,18 @@ async function comprarCasa(){
             mostrarHotel("div-" + casi.id + "-" + idHot);
             ocultarCasas("div-" + casi.id);
         }
-        mostrar(mensaje);
-
-        /* SE ACTUALIZA EL DINERO DEL JUGADOR POR PANTALLA */
-        actualizarDinero(turno);
         /* SE DESHABILITA LA OPCIÓN DE COMPRAR CASAS EN LA CASILLA */
-        const casilla = document.getElementById(casi.id);
+        /*const casilla = document.getElementById(casi.id);
         casilla.classList.remove("pinchable");
-        casilla.removeEventListener("click", habilitarCompCasas);
-        /* SE REESTABLECE EL TEXTO DEL BOTÓN DE COMPRAR CASAS Y SE DESHABILITA */
-        const btnCompCasas = document.getElementById("btnComprarCasas" + turno.id);
-        btnCompCasas.innerHTML = "Comprar casa";
-        btnCompCasas.disabled = true;
-        btnCompCasas.removeEventListener("click", comprarCasa);
+        casilla.classList.remove("seleccionable");
+        casilla.removeEventListener("click", comprarCasa);*/
+
         /* SE QUITA EL ESTILO DEL CURSOR EN LAS CASILLAS DEL MISMO GRUPO */
         casi.grupo.casillas.forEach(cas=>{
-            const casilla = document.getElementById(cas.id);
-            casilla.classList.remove("pinchable");
+            const casillaGrupo = document.getElementById(cas.id);
+            casillaGrupo.classList.remove("pinchable");
+            casillaGrupo.removeEventListener("click", comprarCasa);
+            casillaGrupo.classList.remove("seleccionable");
         });
         /* SE HABILITA O NO LA COMPRA DE CASAS EN LAS CASILLAS DEL GRUPO */
         casi.grupo.casillas.forEach(cas=>{
@@ -165,6 +170,8 @@ async function comprarCasa(){
                 btnComprar.disabled = true;
             }
         }
+        await ocultar(mensaje);
+        mostrar(mensaje);
     }
 
 }

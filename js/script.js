@@ -625,7 +625,7 @@ async function start(){
         btnAccion.addEventListener("click", modoAcciones);
     });
     const btnCompCas = document.getElementById("btnComprarCasas");
-    btnCompCas.addEventListener("click", modoVentaCasas);
+    btnCompCas.addEventListener("click", modoCompraCasas);
     const btnVenta = document.getElementById("btnVentaJug");
     btnVenta.addEventListener("click", habilitarClickVentaJugador);
 

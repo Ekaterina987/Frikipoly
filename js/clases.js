@@ -139,7 +139,6 @@ class Grupo{
                 this.propietario = propietario;
             }
         }
-        if(this.propietario!=null)console.log(this.propietario.nombre);
         return propietario;
     }
     /* COMPRUEBA SI TODAS LAS PROPIEDADES DEL GRUPO TIENEN TODAS LAS CASAS*/
