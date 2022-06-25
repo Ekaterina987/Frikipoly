@@ -147,12 +147,6 @@ async function turnoJugador(){
         }
     }
 }
-function turnoComprar(){
-    /* ACCIONES PERMITIDAS EN EL TURNO */
-    /* COMPRAR CASAS U HOTELES */
-    const btnCompCasas = document.getElementById("btnComprarCasas");
-    btnCompCasas.disabled = false;
-}
 /* VARIABLE EN LA QUE SE GUARDA EL OBJETO CASILLA EN EL QUE SE DESEA REALIZAR ACCIONES */
 var casi;
 
@@ -245,8 +239,33 @@ async function jugadorJuego(inicial, final){
 }
 function accionesTurno() {
     const btnAccion = document.getElementById("btnAcciones" + turno.id);
+    btnAccion.disabled = true;
     if(turno.propiedades.length !== 0){
-        btnAccion.disabled = false;
+        if(turno.gruposCasillas.length !== 0){
+            turno.gruposCasillas.forEach(grupo=>{
+                if(turno.calcularMayorCasas(grupo) === 0){
+                    btnAccion.disabled = false;
+                }
+                grupo.casillas.forEach(casilla=>{
+                    if(casilla.tipo === "propiedad"){
+                        if(turno.dinero > casilla.precioCasa && casilla.hoteles !== 1){
+                            btnAccion.disabled = false;
+                        }
+                    }
+
+                });
+            });
+        }
+        turno.propiedades.forEach(propiedad=>{
+           if(propiedad.tipo === "propiedad"){
+               if(propiedad.grupo.propietario === null){
+                   btnAccion.disabled = false;
+               }
+           } else{
+               btnAccion.disabled = false;
+           }
+        });
+
     }
 }
 /* SE CREA UNA PROMESA QUE SE EJECUTARÁ CUANDO SE MUEVA LA CASILLA A LA POSICIÓN 10 (AZKABÁN) */
@@ -523,12 +542,13 @@ async function finalizar(){
     btnCompCasas.disabled = true;
     btnCompCasas.removeEventListener("click",comprarCasa);*/
 
+    /*1234*/
     /* SE DESHABILITA LA POSIBILIDAD DE PINCHAR EN LAS CASILLAS */
     turno.gruposCasillas.forEach(grupo=>{
         grupo.casillas.forEach(cas=>{
             const casillaHtml = document.getElementById(cas.id);
             casillaHtml.classList.remove("pinchable");
-            casillaHtml.removeEventListener("click", habilitarCompCasas);
+            casillaHtml.removeEventListener("click", comprarCasa);
         })
     });
 
@@ -550,8 +570,10 @@ async function finalizar(){
 
 /* FUNCIÓN PARA ACTUALIZAR POR PANTALLA EL DINERO DEL JUGADOR */
 function actualizarDinero(jugador){
-    let dinero = document.getElementById("sdinero" + jugador.id);
+    const dinero = document.getElementById("sdinero" + jugador.id);
     dinero.innerHTML = jugador.dinero;
+    const dinero1 = document.getElementById("sdinero");
+    dinero1.innerHTML = jugador.dinero;
 }
 
 /* FUNCIÓN PARA LIBERAR PROPIEDADES DEL JUGADOR */
@@ -629,19 +651,68 @@ async function start(){
     const btnVenta = document.getElementById("btnVentaJug");
     btnVenta.addEventListener("click", habilitarClickVentaJugador);
 
+    const btnCerrar = document.getElementById("boton-cerrar");
+    const btnFlecha = document.getElementById("btn-flecha");
+
+    btnCerrar.addEventListener("click", cerrar);
+    btnFlecha.addEventListener("click", volver);
 
     /* SE ESTABLECE LA POSICIÓN QUE TENDRÁ EL PRIMER PERDEDOR */
     posicionJugador = jugadores.length;
     /* SE MUESTRA LA ANIMACIÓN DEL SUBRAYADO DEL PRIMER JUGADOR*/
     await animIniciar(turno);
 }
+function volver() {
+    const btnCompCasas = document.getElementById("btnComprarCasas");
+    const btnVentaJug = document.getElementById("btnVentaJug");
+    const flecha = document.getElementById("btn-flecha");
+    btnVentaJug.classList.remove("mover-izquierda");
+    btnVentaJug.classList.remove("transparente");
+    btnCompCasas.classList.remove("mover-izquierda");
+    btnCompCasas.classList.remove("invisible");
+    flecha.classList.add("transparente");
+    flecha.classList.add("mover-izquierda");
+
+    turno.gruposCasillas.forEach(grupo=> {
+        grupo.casillas.forEach(cas => {
+            const casillaGrupo = document.getElementById(cas.id);
+            casillaGrupo.classList.remove("pinchable");
+            casillaGrupo.classList.remove("seleccionable");
+            casillaGrupo.removeEventListener("click", comprarCasa);
+            casillaGrupo.removeEventListener("click", venderProp);
+        });
+    });
+}
+function cerrar() {
+    volver();
+
+    const acciones = document.getElementById("acciones");
+    acciones.classList.add("oculto");
+    const btnFin = document.getElementById("btnFinTurno");
+    btnFin.disabled = false;
+    const tnombre = document.getElementById("titulo-nombre");
+    tnombre.classList.remove("titulo-nombre" + turno.id);
+    const sdinero = document.getElementById("sdinero");
+    tnombre.innerHTML = "";
+    sdinero.innerHTML = "";
+
+    const btnCompCasas = document.getElementById("btnComprarCasas");
+    btnCompCasas.disabled = true;
+
+    const btnVenta = document.getElementById("btnVentaJug");
+    btnVenta.disabled = true;
+
+}
 function modoAcciones() {
-    const idBoton = this.id;
-    const id = parseInt(idBoton.slice(11));
     const acciones = document.getElementById("acciones");
     acciones.classList.remove("oculto");
     const btnFin = document.getElementById("btnFinTurno");
     btnFin.disabled = true;
+    const tnombre = document.getElementById("titulo-nombre");
+    tnombre.classList.add("titulo-nombre" + turno.id);
+    const sdinero = document.getElementById("sdinero");
+    tnombre.innerHTML = turno.nombre;
+    sdinero.innerHTML = turno.dinero;
 
     turnoComprar();
     habilitarVentaPropiedadAJugador();

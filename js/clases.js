@@ -42,11 +42,13 @@ class Jugador{
         let numMenorCasas = 4;
         let numMenorHoteles = 1;
         grupo.casillas.forEach(propiedad=>{
-            if(propiedad.casas< numMenorCasas){
-                numMenorCasas = propiedad.casas;
-            }
-            if(propiedad.hoteles<numMenorHoteles){
-                numMenorHoteles = propiedad.hoteles;
+            if(propiedad.tipo === "propiedad") {
+                if (propiedad.casas < numMenorCasas) {
+                    numMenorCasas = propiedad.casas;
+                }
+                if (propiedad.hoteles < numMenorHoteles) {
+                    numMenorHoteles = propiedad.hoteles;
+                }
             }
         });
         return numMenorCasas+numMenorHoteles;
@@ -56,11 +58,13 @@ class Jugador{
         let numMayorCasas = 0;
         let numMayorHoteles = 0;
         grupo.casillas.forEach(propiedad=>{
-            if(propiedad.casas> numMayorCasas){
-                numMayorCasas = propiedad.casas;
-            }
-            if(propiedad.hoteles>numMayorHoteles){
-                numMayorHoteles = propiedad.hoteles;
+            if(propiedad.tipo === "propiedad"){
+                if(propiedad.casas> numMayorCasas){
+                    numMayorCasas = propiedad.casas;
+                }
+                if(propiedad.hoteles>numMayorHoteles){
+                    numMayorHoteles = propiedad.hoteles;
+                }
             }
         });
         return numMayorCasas+numMayorHoteles;

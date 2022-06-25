@@ -24,14 +24,29 @@ function habilitarClickCasillas(){
     })
 }
 function habilitarVentaPropiedadAJugador(){
+    const btnVenta = document.getElementById("btnVentaJug");
+    btnVenta.disabled = true;
     if(turno.propiedades.length > 0){
-        const btnVenta = document.getElementById("btnVentaJug");
-        btnVenta.disabled = false;
+        if(turno.gruposCasillas.length> 0){
+            turno.gruposCasillas.forEach(grupo=>{
+                if(turno.calcularMayorCasas(grupo) === 0){
+                    btnVenta.disabled = false;
+                }
+            });
+        }else{
+            turno.propiedades.forEach(propiedad=>{
+                if(propiedad.casas === 0){
+                    btnVenta.disabled = false;
+                }
+            });
+        }
     }
 }
 /* SE HABILITA LA SELECCIÓN DE UNA CASILLA PARA SU VENTA O LA VENTA DE SUS CASAS/HOTELES */
 async function habilitarClickVentaJugador(){
-    await popUp("Selecciona la propiedad que quieres vender.");
+    const btnCompCasas = document.getElementById("btnComprarCasas");
+    const btnVentaJug = document.getElementById("btnVentaJug");
+    const flecha = document.getElementById("btn-flecha");
     /* PARA CADA UNA DE LAS PROPIEDADES */
     turno.propiedades.forEach(propiedad=>{
         const casPropiedad = document.getElementById(propiedad.id);
@@ -49,7 +64,13 @@ async function habilitarClickVentaJugador(){
            casPropiedad.classList.add("pinchable");
            casPropiedad.classList.add("seleccionable");
         }
-    })
+    });
+    btnVentaJug.classList.add("mover-izquierda");
+    btnVentaJug.classList.add("transparente");
+    btnCompCasas.classList.add("mover-izquierda");
+    btnCompCasas.classList.add("invisible");
+    flecha.classList.remove("transparente");
+    flecha.classList.remove("mover-izquierda");
 }
 async function venderProp(){
     casi = tablero[this.id - 1];
@@ -75,12 +96,6 @@ function cancelarVenta(){
         casPropiedad.classList.remove("seleccionable");
         casPropiedad.classList.remove("seleccionado");
         casPropiedad.removeEventListener("click", venderProp);
-    });
-    /* SE HABILITA LA OPCIÓN DE COMPRAR CASAS EN OTRAS CASILLAS SI SE PUEDE */
-    turno.gruposCasillas.forEach(grupo=>{
-        grupo.casillas.forEach(cas=>{
-            habilitarComp(cas, turno);
-        })
     });
 }
 async function selCantidad(){
@@ -114,17 +129,17 @@ async function selCantidad(){
             casiTablero.classList.remove("casillaJugador" + turno.id);
             casiTablero.classList.remove("seleccionado");
             casiTablero.classList.remove("pinchable");
+            casiTablero.removeEventListener("click", venderProp);
             casiTablero.classList.add("casillaJugador" + comprador.id);
+            turnoComprar();
+            habilitarVentaPropiedadAJugador();
+            accionesTurno();
 
             const mensaje = document.getElementById("mensaje");
 
             await ocultar(mensaje);
             mensaje.innerHTML = turno.nombre + " ha vendido " + casi.nombre + " a " + comprador.nombre;
             mostrar(mensaje);
-
-
-            console.log(casi.propietario);
-            console.log(casi.grupo.propietario);
 
         }catch (e){
             cancelarVenta();

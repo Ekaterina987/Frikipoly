@@ -49,6 +49,23 @@ async function comprar(){
 
     }
 }
+function turnoComprar(){
+    /* ACCIONES PERMITIDAS EN EL TURNO */
+    /* COMPRAR CASAS U HOTELES */
+    const btnCompCasas = document.getElementById("btnComprarCasas");
+    btnCompCasas.disabled = true;
+    if(turno.gruposCasillas.length>0){
+        turno.gruposCasillas.forEach(grupo=>{
+            grupo.casillas.forEach(casilla=>{
+                if(turno.dinero >= casilla.precioCasa && casilla.hoteles !== 1){
+                    btnCompCasas.disabled = false;
+                }
+            });
+        });
+    }
+
+
+}
 async function modoCompraCasas() {
     const btnCompCasas = document.getElementById("btnComprarCasas");
     const btnVentaJug = document.getElementById("btnVentaJug");
@@ -170,6 +187,9 @@ async function comprarCasa(){
                 btnComprar.disabled = true;
             }
         }
+        turnoComprar();
+        habilitarVentaPropiedadAJugador();
+        accionesTurno();
         await ocultar(mensaje);
         mostrar(mensaje);
     }
