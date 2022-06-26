@@ -35,9 +35,14 @@ function habilitarVentaPropiedadAJugador(){
             });
         }else{
             turno.propiedades.forEach(propiedad=>{
-                if(propiedad.casas === 0){
+                if(propiedad.tipo === "propiedad"){
+                    if(propiedad.casas === 0){
+                        btnVenta.disabled = false;
+                    }
+                }else{
                     btnVenta.disabled = false;
                 }
+
             });
         }
     }
@@ -131,8 +136,6 @@ async function selCantidad(){
             casiTablero.classList.remove("pinchable");
             casiTablero.removeEventListener("click", venderProp);
             casiTablero.classList.add("casillaJugador" + comprador.id);
-            turnoComprar();
-            habilitarVentaPropiedadAJugador();
             accionesTurno();
 
             const mensaje = document.getElementById("mensaje");

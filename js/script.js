@@ -110,7 +110,7 @@ async function turnoJugador(){
             await popUp("No puedes salir de Azkabán");
         }
         await asyncMensajeAzkaban();
-        turnoComprar();
+        accionesTurno();
     }
     /* FUNCIÓN QUE PIDE CONFIRMACIÓN DE PAGO PARA SALIR DE AZKABAN Y EN CASO AFIRMATIVO SACA AL JUGADOR */
     async function pagarAzkaban() {
@@ -120,7 +120,7 @@ async function turnoJugador(){
                 await popUpConfirm("¿Quieres pagar 50 Galeones para salir de Azkabán?");
                 salirAzkaban();
             } catch (error) {
-                turnoComprar();
+                accionesTurno();
             }
         }
 
@@ -185,7 +185,7 @@ async function jugadorJuego(inicial, final){
             await asyncMovimientoAzkaban(ficha, casiFinal);
         }
         await asyncIrAzkaban();
-        turnoComprar();
+        accionesTurno();
         /* EN EL RESTO DE LOS CASOS */
     }else{
         /* SI LA CASILLA ES COMPRABLE */
@@ -238,6 +238,8 @@ async function jugadorJuego(inicial, final){
     }
 }
 function accionesTurno() {
+    turnoComprar();
+    habilitarVentaPropiedadAJugador();
     const btnAccion = document.getElementById("btnAcciones" + turno.id);
     btnAccion.disabled = true;
     if(turno.propiedades.length !== 0){
@@ -257,13 +259,13 @@ function accionesTurno() {
             });
         }
         turno.propiedades.forEach(propiedad=>{
-           if(propiedad.tipo === "propiedad"){
-               if(propiedad.grupo.propietario === null){
-                   btnAccion.disabled = false;
-               }
-           } else{
-               btnAccion.disabled = false;
-           }
+            if(propiedad.tipo === "propiedad"){
+                if(propiedad.grupo.propietario === null){
+                    btnAccion.disabled = false;
+                }
+            } else{
+                btnAccion.disabled = false;
+            }
         });
 
     }
@@ -524,6 +526,8 @@ function animIniciar(jugadorTurno) {
 
 /* FUNCIÓN QUE SE EJECUTA AL FINALIZAR EL TURNO DE UN JUGADOR */
 async function finalizar(){
+    const btnAccion = document.getElementById("btnAcciones" + turno.id);
+    btnAccion.disabled = true;
     /* SE QUITA EL SUBRAYADO AL JUGADOR */
     const nombre = document.getElementById("tnombre" + turno.id);
     nombre.classList.remove("subrayado-after");
@@ -673,14 +677,12 @@ function volver() {
     flecha.classList.add("transparente");
     flecha.classList.add("mover-izquierda");
 
-    turno.gruposCasillas.forEach(grupo=> {
-        grupo.casillas.forEach(cas => {
-            const casillaGrupo = document.getElementById(cas.id);
-            casillaGrupo.classList.remove("pinchable");
-            casillaGrupo.classList.remove("seleccionable");
-            casillaGrupo.removeEventListener("click", comprarCasa);
-            casillaGrupo.removeEventListener("click", venderProp);
-        });
+    turno.propiedades.forEach(cas=> {
+        const casillaGrupo = document.getElementById(cas.id);
+        casillaGrupo.classList.remove("pinchable");
+        casillaGrupo.classList.remove("seleccionable");
+        casillaGrupo.removeEventListener("click", comprarCasa);
+        casillaGrupo.removeEventListener("click", venderProp);
     });
 }
 function cerrar() {
@@ -713,10 +715,6 @@ function modoAcciones() {
     const sdinero = document.getElementById("sdinero");
     tnombre.innerHTML = turno.nombre;
     sdinero.innerHTML = turno.dinero;
-
-    turnoComprar();
-    habilitarVentaPropiedadAJugador();
-    /*456*/
 
 }
 /* FUNCION PARA SELECCIONAR MODO DE JUEGO */

@@ -187,8 +187,6 @@ async function comprarCasa(){
                 btnComprar.disabled = true;
             }
         }
-        turnoComprar();
-        habilitarVentaPropiedadAJugador();
         accionesTurno();
         await ocultar(mensaje);
         mostrar(mensaje);
