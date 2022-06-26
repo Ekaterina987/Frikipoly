@@ -110,6 +110,44 @@ async function getModo(){
 
 /* FUNCIÓN QUE ESTABLECE LOS VALORES INICIALES */
 async function start(){
+    /* SE RECOJE EL TIPO DE JUEGO */
+    let tipoPartida = localStorage.getItem("tipo-juego");
+    /* FUNCIÓN QUE DA COMIENZO A LA CUENTA ATRÁS */
+
+    function comenzarCuenta(){
+        intervalo = setInterval(cuentaAtras, 1000);
+    }
+    /* FUNCIÓN QUE SE EJECUTA CADA SEGUNDO SI HAY CUENTA ATRÁS */
+    function cuentaAtras(){
+        /* SE CALCULA Y MUESTRA EL TIEMPO RESTANTE POR PANTALLA */
+        const parTiempo = document.getElementById("p-tiempo");
+        var tiempoTotal = "";
+        function calcTiempo(segundos){
+            let horas = Math.floor(segundos/3600);
+            let minutos = Math.floor(segundos/60)%60;
+            let segun = segundos%60;
+
+            tiempoTotal = horas.toString().padStart(2, '0') + ":" + minutos.toString().padStart(2, '0') + ":" + segun.toString().padStart(2, '0');
+        }
+        /* SE RESTA UN SEGUNDO */
+        contTiempo--;
+        calcTiempo(contTiempo);
+        parTiempo.innerHTML = tiempoTotal;
+        /* EN CASO DE QUE EL TIEMPO HAYA LLEGADO A 0 SE TERMINA LA PARTIDA Y SE BORRA EL INTERVALO */
+        if(contTiempo===0){
+            finalPartida("contrarreloj");
+            clearInterval(intervalo);
+        }
+    }
+    /* SI LA PARTIDA ES A CONTRARRELOJ RECOGE EL TIEMPO Y LO CONVIERTE A SEGUNDOS */
+    if(tipoPartida==="contrarreloj"){
+        let horasStr = localStorage.getItem("horas");
+        let horas = parseInt(horasStr.substr(0, 2));
+        let minutos = parseInt(horasStr.substr(3, 2));
+        contTiempo = (minutos * 60) + (horas * 3600);
+        comenzarCuenta();
+    }
+
     const btnVolumen = document.getElementById("btn-volumen");
     const iconVol = document.getElementById("icono-volumen");
     btnVolumen.addEventListener("click", silenciar);
@@ -194,43 +232,7 @@ var contTiempo = 7200;
 /* JUEGO */
 document.addEventListener("DOMContentLoaded", async ()=>{
     await getModo();
-    /* SE RECOJE EL TIPO DE JUEGO */
-    let tipoPartida = localStorage.getItem("tipo-juego");
-    /* FUNCIÓN QUE DA COMIENZO A LA CUENTA ATRÁS */
 
-    function comenzarCuenta(){
-        intervalo = setInterval(cuentaAtras, 1000);
-    }
-    /* FUNCIÓN QUE SE EJECUTA CADA SEGUNDO SI HAY CUENTA ATRÁS */
-    function cuentaAtras(){
-        /* SE CALCULA Y MUESTRA EL TIEMPO RESTANTE POR PANTALLA */
-        const parTiempo = document.getElementById("p-tiempo");
-        var tiempoTotal = "";
-        function calcTiempo(segundos){
-            let horas = Math.floor(segundos/3600);
-            let minutos = Math.floor(segundos/60)%60;
-            let segun = segundos%60;
-
-            tiempoTotal = horas.toString().padStart(2, '0') + ":" + minutos.toString().padStart(2, '0') + ":" + segun.toString().padStart(2, '0');
-        }
-        /* SE RESTA UN SEGUNDO */
-        contTiempo--;
-        calcTiempo(contTiempo);
-        parTiempo.innerHTML = tiempoTotal;
-        /* EN CASO DE QUE EL TIEMPO HAYA LLEGADO A 0 SE TERMINA LA PARTIDA Y SE BORRA EL INTERVALO */
-        if(contTiempo===0){
-            finalPartida("contrarreloj");
-            clearInterval(intervalo);
-        }
-    }
-    /* SI LA PARTIDA ES A CONTRARRELOJ RECOGE EL TIEMPO Y LO CONVIERTE A SEGUNDOS */
-    if(tipoPartida==="contrarreloj"){
-        let horasStr = localStorage.getItem("horas");
-        let horas = parseInt(horasStr.substr(0, 2));
-        let minutos = parseInt(horasStr.substr(3, 2));
-        contTiempo = (minutos * 60) + (horas * 3600);
-        comenzarCuenta();
-    }
     /* SE INICIA EL JUEGO */
     start();
 });

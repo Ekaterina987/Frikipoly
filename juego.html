@@ -53,7 +53,20 @@
         </div>
     </div>
     <div id="silenciar">
-        <button id="btn-volumen"><i class="fas fa-volume-down icono-volumen" id="icono-volumen"></i></button>
+        <div class="contenedor-volumen">
+            <div class="col-3">
+                <div class="row">
+                    <button id="btn-volumen"><i class="fas fa-volume-down icono-volumen" id="icono-volumen"></i></button>
+                </div>
+            </div>
+            <div class="col-1 vacio"></div>
+            <div class="col-3">
+                <div class="row jugador">
+
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="fondo oculto" id="popup-confirmar">
         <div class="div-mensaje" id="div-mensaje-confirm">
@@ -160,12 +173,36 @@
     </div>
     <div id="contenedor-tablero">
         <div class="acciones oculto" id="acciones">
-            <button class="boton-icono pinchable boton-cerrar" id="boton-cerrar"><i class="fas fa-window-close cerrar"></i></button>
-            <h3 class="titulo-nombre subrayado subrayado-after" id="titulo-nombre"></h3>
-            <p class="galeones">Galeones: <span class="dinero" id="sdinero"></span></p>
-            <button class="boton-icono pinchable transparente mover-izquierda boton-flecha" id="btn-flecha"><i class="fas fa-reply flecha"></i></button>
-            <button class="boton botones-acciones" id="btnComprarCasas" disabled>Comprar casas</button>
-            <button class="boton botones-acciones" id="btnVentaJug" disabled>Vender propiedad a jugador</button>
+            <div class="gradiente-acciones"></div>
+            <div class="gradiente-acciones1"></div>
+            <div class="gradiente-acciones2"></div>
+            <div class="contenedor-acciones">
+            <div class="contenedor-boton">
+                <button class="boton-icono pinchable boton-cerrar" id="boton-cerrar"><i class="fas fa-window-close cerrar"></i></button>
+            </div>
+            <div class="contenedor-col-acciones">
+                <div class="col-3">
+                    <div class="row jugador">
+                        <div class="jugadores">
+                            <h3 class="titulo-nombre subrayado subrayado-after" id="titulo-nombre"></h3>
+                            <p class="galeones">Galeones: <span class="dinero" id="sdinero"></span></p>
+                            <button class="boton-icono pinchable transparente mover-izquierda boton-flecha" id="btn-flecha"><i class="fas fa-reply flecha"></i></button>
+                            <button class="boton botones-acciones" id="btnComprarCasas" disabled>Comprar casas</button>
+                            <button class="boton botones-acciones" id="btnVentaJug" disabled>Vender propiedad a jugador</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1 vacio"></div>
+                <div class="col-3">
+                    <div class="row jugador oculto" id="div-comprador">
+                        <div class="jugadores">
+                            <h3 class="titulo-nombre subrayado subrayado-after" id="titulo-nombre-comprador"></h3>
+                            <p class="galeones">Galeones: <span class="dinero" id="sdinero-comprador"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
         </div>
         <div class="col-3">
             <div class="row jugador">

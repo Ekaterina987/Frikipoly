@@ -29,6 +29,7 @@ function generarJugador(nombre){
     /* BOTÓN COMPRAR PROPIEDAD */
     const btnComprar = document.createElement("button");
     btnComprar.classList.add("boton");
+    btnComprar.classList.add("boton-tablero");
     btnComprar.appendChild(document.createTextNode("Comprar propiedad"));
     btnComprar.id = "btnComprar" + cont;
     btnComprar.disabled = true;
@@ -47,18 +48,21 @@ function generarJugador(nombre){
     /* BOTÓN ACCIONES */
     const btnAcciones = document.createElement("button");
     btnAcciones.classList.add("boton");
+    btnAcciones.classList.add("boton-tablero");
     btnAcciones.appendChild(document.createTextNode("Acciones"));
     btnAcciones.id = "btnAcciones" + cont;
     btnAcciones.disabled = true;
     /* BOTÓN VENDER PROPIEDADES */
     const btnVenta = document.createElement("button");
     btnVenta.classList.add("boton");
+    btnVenta.classList.add("boton-tablero");
     btnVenta.appendChild(document.createTextNode("Vender propiedad"));
     btnVenta.id = "btnVenta" + cont;
     btnVenta.classList.add("invisible");
     /* BOTÓN VENDER CASAS/HOTELES */
     const btnVentaCasas = document.createElement("button");
     btnVentaCasas.classList.add("boton");
+    btnVentaCasas.classList.add("boton-tablero");
     btnVentaCasas.appendChild(document.createTextNode("Vender casa"));
     btnVentaCasas.id = "btnVentaCasas" + cont;
     btnVentaCasas.classList.add("invisible");

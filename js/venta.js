@@ -82,9 +82,8 @@ async function venderProp(){
     this.classList.remove("seleccionable");
     this.classList.add("seleccionado");
     try{
-        await popUpConfirm("¿Quieres vender " + casi.nombre +  "?");
+        await popUpSeleccion();
         try{
-            await popUpSeleccion();
             await selCantidad();
         }catch (e){
             cancelarVenta();

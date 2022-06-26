@@ -28,15 +28,22 @@
     --azul-oceano: rgb(1, 59, 167);
     --azul: rgb(39, 114, 187);
     --azul-cielo: rgb(156, 205, 238);
+    --lila: rgb(60, 56, 173);
     --negro: rgb(26, 23, 16);
-    --negro-translucido: rgba(26, 23, 16, 0.4);
     --blanco: rgb(255, 244, 209);
+    --transparente: rgba(0,0,0,0);
 
     /*secundarios fichas */
     --ficha1: rgb(255, 197, 150);
     --ficha2: rgb(26, 23, 16);
     --ficha3: rgb(241, 231, 222);
     --ficha4: rgb(238, 207, 83);
+
+    /*translucidos*/
+    --rojo-translucido: rgba(160, 26, 36, 0.5);
+    --azul-translucido: rgba(34, 35, 106, 0.5);
+    --burdeos-translucido: rgba(58, 19, 11, 0.5);
+    --negro-translucido: rgba(26, 23, 16, 0.4);
 }
 @font-face {
     font-family: "Animales Fantastic";
@@ -74,6 +81,9 @@ p{
     margin-right: auto;
     width: 100%;
     height: fit-content;
+}
+.boton-tablero{
+    background-color: var(--azul);
 }
 .btn-finalizar{
     background-color: var(--rojo);
@@ -903,7 +913,7 @@ button.seleccionado{
     padding: 0.7em;
 }
 #popup-tiempo{
-    z-index: 9999;
+    z-index: 99999;
 }
 #silenciar{
     position: absolute;
@@ -914,33 +924,31 @@ button.seleccionado{
 #btn-volumen{
     background-color: transparent;
     border: none;
-    margin-right: 4em;
     margin-top: 1em;
-
+    margin-left: auto;
 }
 #btn-volumen:hover .icono-volumen{
     color: var(--azul-cielo);
     cursor: pointer;
 }
 #btn-volumen .icono-volumen{
-    color: var(--pergamino);
-    font-size: 2em;
+    color: var(--amarillo);
+    font-size: 2.5em;
 }
 .invisible{
     visibility: hidden;
 }
 
-
 .seleccionable{
-    background-color: rgba(160, 26, 36, 0.5);
+    background-color: var(--rojo-translucido);
     box-shadow: 0px 0px 3px 3px var(--rojo);
 }
 .seleccionable:hover{
-    background-color: rgba(34, 35, 106, 0.5);
+    background-color: var(--azul-translucido);
     box-shadow: 0px 0px 5px 5px var(--azul-oscuro);
 }
 div.seleccionado{
-    background-color: rgba(58, 19, 11, 0.5);
+    background-color: var(--burdeos-translucido);
     box-shadow: 0px 0px 3px 3px var(--burdeos-oscuro);
 }
 .acciones{
@@ -949,14 +957,8 @@ div.seleccionado{
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at top, var(--azul) 0%, var(--azul-oscuro) 60%);
     background-color: var(--azul-oscuro);
     z-index: 9;
-    display: flex;
-    flex-direction: column;
-    padding: 2em;
-    padding-top: 3em;
-    gap: 1em;
     box-sizing: border-box;
 }
 div.col-tablero{
@@ -966,8 +968,14 @@ div.col-tablero{
     z-index: 999;
     width: 18em;
     margin: 0;
-    transition: transform 1s , opacity 1s;
+    transition: transform 1s , opacity 1s, background-color 0.4s, color 0.4s;
+    background-color: var(--amarillo);
+    color: var(--negro);
+}
+.botones-acciones:hover:not([disabled]){
+    cursor: pointer;
     background-color: var(--rojo);
+    color: var(--pergamino);
 }
 
 .oculto{
@@ -995,11 +1003,57 @@ div.col-tablero{
     color: var(--azul-cielo);
 }
 .cerrar{
-    color: var(--pergamino);
-    font-size: 2em;
-    transition: color 0.5s, transform 0.5s;
+    color: var(--rojo-claro);
+    font-size: 2.5em;
+    transition: color 0.4s, transform 0.4s;
 }
 .boton-cerrar:hover .cerrar{
-    color: var(--rojo-pastel);
+    color: var(--amarillo);
     transform: scale(1.1);
+}
+.vacio{
+    min-width: var(--lado_tablero);
+    padding-left: 2em;
+    padding-right: 2em;
+}
+.contenedor-acciones{
+    padding: 2em;
+    padding-top: 3em;
+    position: relative;
+    z-index: 1;
+}
+.contenedor-col-acciones{
+    display: flex;
+}
+.contenedor-volumen{
+    display: flex;
+}
+.boton-cerrar{
+    display: block;
+    margin-left: auto;
+}
+
+.gradiente-acciones{
+    z-index: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: var(--transparente);
+    background: radial-gradient(circle at left bottom, var(--lila) 0%, var(--transparente) 40%);
+}
+.gradiente-acciones1{
+    z-index: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: var(--transparente);
+    background: radial-gradient(circle at top, var(--lila) 0%, var(--transparente) 60%);
+}
+.gradiente-acciones2{
+    z-index: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: var(--transparente);
+    background: radial-gradient(circle at right, var(--lila) 0%, var(--transparente) 60%);
 }
