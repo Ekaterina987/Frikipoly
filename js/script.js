@@ -55,8 +55,6 @@ function audio(src) {
 function actualizarDinero(jugador){
     const dinero = document.getElementById("sdinero" + jugador.id);
     dinero.innerHTML = jugador.dinero;
-    const dinero1 = document.getElementById("sdinero");
-    dinero1.innerHTML = jugador.dinero;
 }
 
 

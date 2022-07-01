@@ -426,6 +426,7 @@ h4{
 
 .jugador{
     height: 50%;
+    transition: transform 1s, opacity 1s;
 }
 .jugadores{
     display: flex;
@@ -958,6 +959,7 @@ div.seleccionado{
     width: 100%;
     height: 100%;
     background-color: var(--azul-oscuro);
+    transition: opacity 1s;
     z-index: 9;
     box-sizing: border-box;
 }
@@ -977,10 +979,22 @@ div.col-tablero{
     background-color: var(--rojo);
     color: var(--pergamino);
 }
-
-.oculto{
-    display: none;
+#galeones {
+    transition-delay: 0.2s;
 }
+#btnComprarCasas{
+    transition-delay: 0.4s;
+}
+#btnVentaJug{
+    transition-delay: 0.6s;
+}
+.mover-derecha{
+    transform: translateX(20em);
+}
+.anim-entrada{
+    transition: transform 1s , opacity 1s;
+}
+
 .mover-izquierda{
     transform: translateX(-20em);
 }
@@ -1056,4 +1070,10 @@ div.col-tablero{
     height: 100%;
     background: var(--transparente);
     background: radial-gradient(circle at right, var(--lila) 0%, var(--transparente) 60%);
+}
+
+
+
+.oculto{
+    display: none;
 }

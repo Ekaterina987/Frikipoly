@@ -9,7 +9,7 @@ function habilitarClickCasillas(){
             if(propiedad.casas===0 && turno.calcularMayorCasas(propiedad.grupo) === 0 && !turno.comprobarCasas()){
                 casPropiedad.classList.add("pinchable");
                 casPropiedad.addEventListener("click", habilitarVentaCasillas);
-            /* SI LA PROPIEDAD TIENE CASAS SE PUEDEN VENDER ESTAS*/
+                /* SI LA PROPIEDAD TIENE CASAS SE PUEDEN VENDER ESTAS*/
             }else if (turno.calcularMayorCasas(propiedad.grupo) !== 0 && turno.calcularMayorCasas(propiedad.grupo) === (propiedad.casas + propiedad.hoteles)){
                 casPropiedad.classList.add("pinchable");
                 casPropiedad.addEventListener("click", habilitarVentaCasas);
@@ -27,24 +27,21 @@ function habilitarVentaPropiedadAJugador(){
     const btnVenta = document.getElementById("btnVentaJug");
     btnVenta.disabled = true;
     if(turno.propiedades.length > 0){
-        if(turno.gruposCasillas.length> 0){
-            turno.gruposCasillas.forEach(grupo=>{
-                if(turno.calcularMayorCasas(grupo) === 0){
+        if(turno.gruposCasillas.length> 0) {
+            turno.gruposCasillas.forEach(grupo => {
+                if (turno.calcularMayorCasas(grupo) === 0) {
                     btnVenta.disabled = false;
                 }
-            });
-        }else{
-            turno.propiedades.forEach(propiedad=>{
-                if(propiedad.tipo === "propiedad"){
-                    if(propiedad.casas === 0){
-                        btnVenta.disabled = false;
-                    }
-                }else{
-                    btnVenta.disabled = false;
-                }
-
             });
         }
+        turno.propiedades.forEach(propiedad=>{
+            if(propiedad.tipo === "propiedad" && propiedad.grupo.propietario === null){
+                btnVenta.disabled = false;
+            }else{
+                btnVenta.disabled = false;
+            }
+
+        });
     }
 }
 /* SE HABILITA LA SELECCIÓN DE UNA CASILLA PARA SU VENTA O LA VENTA DE SUS CASAS/HOTELES */
@@ -65,9 +62,9 @@ async function habilitarClickVentaJugador(){
                 casPropiedad.addEventListener("click", venderProp);
             }
         }else{
-           casPropiedad.addEventListener("click", venderProp);
-           casPropiedad.classList.add("pinchable");
-           casPropiedad.classList.add("seleccionable");
+            casPropiedad.addEventListener("click", venderProp);
+            casPropiedad.classList.add("pinchable");
+            casPropiedad.classList.add("seleccionable");
         }
     });
     btnVentaJug.classList.add("mover-izquierda");
@@ -113,8 +110,12 @@ async function selCantidad(){
             await popUpConfirm("¿" + comprador.nombre + " quieres comprar " + casi.nombre + " por " + cantidad + " Galeones?");
             comprador.dinero-=cantidad;
             actualizarDinero(comprador);
+            const dinero = document.getElementById("sdinero-comprador");
+            dinero.innerHTML = comprador.dinero;
             turno.dinero+=cantidad;
             actualizarDinero(turno);
+            const dinero1 = document.getElementById("sdinero");
+            dinero1.innerHTML = turno.dinero;
 
             /* SI EL JUGADOR POSEÍA EL GRUPO DE CASILLAS ENTONCES SE ELIMINA DE SU POSESIÓN */
             if(turno.tieneGrupo(casi.grupo)){
@@ -161,29 +162,30 @@ function ocultar(elemento) {
 function mostrar(elemento) {
     elemento.classList.remove("transparente");
 }
+
 /* SE HABILITA EL BOTÓN PARA VENDER CASAS O PROPIEDADES */
 function habilitar(propiedad, jugador){
-        /* SE COMPRUEBA EL TIPO DE CASILLA */
-        if(propiedad.tipo==="propiedad"){
-            /* SI ES LA PROPIEDAD QUE MÁS CASAS TIENE SE HABILITA VENDER CASAS EN LA PROPIEDAD */
-            if(jugador.calcularMayorCasas(propiedad.grupo) !== 0 && jugador.calcularMayorCasas(propiedad.grupo) === (propiedad.casas + propiedad.hoteles)){
-                const casiHtml = document.getElementById(propiedad.id);
-                casiHtml.addEventListener("click", habilitarVentaCasas);
-                casiHtml.classList.add("pinchable");
-                /* SI NO HAY CASAS EN EL GRUPO DE CASILLAS ENTONCES SE PUEDE VENDER LA CASILLA */
-            }else if(jugador.calcularMayorCasas(propiedad.grupo) === 0){
-                const casiHtml = document.getElementById(propiedad.id);
-                casiHtml.addEventListener("click", habilitarVentaCasillas);
-                casiHtml.classList.add("pinchable");
-            }
-        }else{
-            /* SI EL JUGADOR NO TIENE CASAS EN OTRAS PROPIEDADES SE PUEDE VENDER LA CASILLA*/
-            if(!jugador.comprobarCasas()){
-                const casiHtml = document.getElementById(propiedad.id);
-                casiHtml.addEventListener("click", habilitarVentaCasillas);
-                casiHtml.classList.add("pinchable");
-            }
+    /* SE COMPRUEBA EL TIPO DE CASILLA */
+    if(propiedad.tipo==="propiedad"){
+        /* SI ES LA PROPIEDAD QUE MÁS CASAS TIENE SE HABILITA VENDER CASAS EN LA PROPIEDAD */
+        if(jugador.calcularMayorCasas(propiedad.grupo) !== 0 && jugador.calcularMayorCasas(propiedad.grupo) === (propiedad.casas + propiedad.hoteles)){
+            const casiHtml = document.getElementById(propiedad.id);
+            casiHtml.addEventListener("click", habilitarVentaCasas);
+            casiHtml.classList.add("pinchable");
+            /* SI NO HAY CASAS EN EL GRUPO DE CASILLAS ENTONCES SE PUEDE VENDER LA CASILLA */
+        }else if(jugador.calcularMayorCasas(propiedad.grupo) === 0){
+            const casiHtml = document.getElementById(propiedad.id);
+            casiHtml.addEventListener("click", habilitarVentaCasillas);
+            casiHtml.classList.add("pinchable");
         }
+    }else{
+        /* SI EL JUGADOR NO TIENE CASAS EN OTRAS PROPIEDADES SE PUEDE VENDER LA CASILLA*/
+        if(!jugador.comprobarCasas()){
+            const casiHtml = document.getElementById(propiedad.id);
+            casiHtml.addEventListener("click", habilitarVentaCasillas);
+            casiHtml.classList.add("pinchable");
+        }
+    }
 }
 /* FUNCIÓN PARA VENDER UNA CASILLA */
 async function ventaCasilla(){
@@ -338,7 +340,7 @@ async function ventaCasa(){
             casi.grupo.casillas.forEach(cas=>{
                 habilitar(cas, turno);
             })
-        /* SI NO SE HA TERMINADO LA VENTA Y EL JUGADOR AUN TIENE CASAS FUERA DEL GRUPO SE HABILITA LA VENTA DE CASAS EN LAS CASILLAS CORRESPONDIENTES */
+            /* SI NO SE HA TERMINADO LA VENTA Y EL JUGADOR AUN TIENE CASAS FUERA DEL GRUPO SE HABILITA LA VENTA DE CASAS EN LAS CASILLAS CORRESPONDIENTES */
         }else if(!finVenta && !turno.comprobarCasas()){
             turno.propiedades.forEach(cas=>{
                 habilitar(cas, turno);

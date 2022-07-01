@@ -172,7 +172,7 @@
         </div>
     </div>
     <div id="contenedor-tablero">
-        <div class="acciones oculto" id="acciones">
+        <div class="acciones invisible transparente" id="acciones">
             <div class="gradiente-acciones"></div>
             <div class="gradiente-acciones1"></div>
             <div class="gradiente-acciones2"></div>
@@ -184,19 +184,19 @@
                 <div class="col-3">
                     <div class="row jugador">
                         <div class="jugadores">
-                            <h3 class="titulo-nombre subrayado subrayado-after" id="titulo-nombre"></h3>
-                            <p class="galeones">Galeones: <span class="dinero" id="sdinero"></span></p>
+                            <h3 class="titulo-nombre subrayado subrayado-after mover-derecha transparente anim-entrada" id="titulo-nombre"></h3>
+                            <p class="galeones mover-derecha  anim-entrada" id="galeones">Galeones: <span class="dinero" id="sdinero"></span></p>
                             <button class="boton-icono pinchable transparente mover-izquierda boton-flecha" id="btn-flecha"><i class="fas fa-reply flecha"></i></button>
-                            <button class="boton botones-acciones" id="btnComprarCasas" disabled>Comprar casas</button>
-                            <button class="boton botones-acciones" id="btnVentaJug" disabled>Vender propiedad a jugador</button>
+                            <button class="boton botones-acciones mover-derecha transparente anim-entrada" id="btnComprarCasas" disabled>Comprar casas</button>
+                            <button class="boton botones-acciones mover-derecha transparente anim-entrada" id="btnVentaJug" disabled>Vender propiedad a jugador</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-1 vacio"></div>
                 <div class="col-3">
-                    <div class="row jugador oculto" id="div-comprador">
+                    <div class="row jugador invisible transparente" id="div-comprador">
                         <div class="jugadores">
-                            <h3 class="titulo-nombre subrayado subrayado-after" id="titulo-nombre-comprador"></h3>
+                            <h3 class="titulo-nombre subrayado" id="titulo-nombre-comprador"></h3>
                             <p class="galeones">Galeones: <span class="dinero" id="sdinero-comprador"></span></p>
                         </div>
                     </div>

@@ -109,7 +109,7 @@ async function popUpSeleccion(){
         }
     });
 
-    function seleccionarJugador(){
+    async function seleccionarJugador(){
         let id = this.id;
         jugadoresEnPie.forEach(jugador=>{
             if(jugador!==turno){
@@ -120,6 +120,20 @@ async function popUpSeleccion(){
         this.classList.add("seleccionado");
         let numJugador = parseInt(id.substr(11));
         comprador = jugadoresEnPie[numJugador - 1];
+        const divComprador = document.getElementById("div-comprador");
+        if(divComprador.classList.contains("invisible")){
+            divComprador.classList.remove("invisible");
+        }else{
+            await ocultar(divComprador);
+        }
+        mostrar(divComprador);
+
+        const nombreComprador =document.getElementById("titulo-nombre-comprador");
+        nombreComprador.innerHTML=comprador.nombre;
+        nombreComprador.classList.add("titulo-nombre" + comprador.id);
+
+        const dineroComprador = document.getElementById("sdinero-comprador");
+        dineroComprador.innerHTML = comprador.dinero;
 
     }
 
